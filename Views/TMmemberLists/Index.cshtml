@@ -1,0 +1,89 @@
+﻿@model IEnumerable<diveWebMVC.Models.TMmemberList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberGender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrgentContact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrgentPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemberPhoto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecentLogin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberGender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrgentContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrgentPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemberPhoto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecentLogin)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MemberId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MemberId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
