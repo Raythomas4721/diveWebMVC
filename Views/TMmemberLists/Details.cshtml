@@ -59,10 +59,13 @@
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.UrgentPhone)
 			</dd>
-			@* <dt class="col-sm-2"> *@
-			@* 	@Html.DisplayNameFor(model => model.MemberPhoto) *@
-			@* </dt> *@
-			@* <dd class="col-sm-10"> *@
+			<dt class="col-sm-2"> 
+			 	@Html.DisplayNameFor(model => model.MemberPhoto) 
+			</dt>
+			<dd class="col-sm-10">
+			<partial name="_ShowPhotoPartial" />
+			</dd>
+				@* <dd class="col-sm-10"> *@
 			@* 	@Html.DisplayFor(model => model.MemberPhoto) *@
 			@* </dd> *@
 			<dt class="col-sm-2  mb-3">
@@ -74,8 +77,8 @@
 		</dl>
 	</div>
 	<div>
-		<a asp-action="Edit" asp-route-id="@Model?.MemberId">Edit</a> |
-		<a asp-action="Index">Back to List</a>
+		<a asp-action="Edit" asp-route-id="@Model?.MemberId" class="btn btn-success me-4">Edit</a>
+		<a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
 	</div>
 </div>
 
