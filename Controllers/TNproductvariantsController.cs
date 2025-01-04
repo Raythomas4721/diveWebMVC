@@ -22,7 +22,7 @@ namespace diveWebMVC.Controllers
         public async Task<IActionResult> Index()
         {
             var diveShopperContext = _context.TNproductvariants.Include(t => t.Product).Include(t => t.Color).Include(t => t.Gender).Include(t => t.Size).Include(t => t.Thickness);
-            return View(await diveShopperContext.ToListAsync());
+            return View(diveShopperContext);
         }
 
         // GET: TNproductvariants/Details/5
@@ -93,11 +93,11 @@ namespace diveWebMVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProductId"] = new SelectList(_context.TNproducts, "ProductId", "ProductId", tNproductvariant.ProductId);
-            ViewData["ColorId"] = new SelectList(_context.TNcolors, "ColorId", "ColorId", tNproductvariant.ColorId);
-            ViewData["GenderId"] = new SelectList(_context.TNgenders, "GenderId", "GenderId", tNproductvariant.GenderId);
-            ViewData["SizeId"] = new SelectList(_context.TNsizes, "SizeId", "SizeId", tNproductvariant.SizeId);
-            ViewData["ThicknessId"] = new SelectList(_context.TNthicknesses, "ThicknessId", "ThicknessId", tNproductvariant.ThicknessId);
+            ViewData["ProductId"] = new SelectList(_context.TNproducts, "ProductId", "ProductName", tNproductvariant.ProductId);
+            ViewData["ColorId"] = new SelectList(_context.TNcolors, "ColorId", "Color", tNproductvariant.ColorId);
+            ViewData["GenderId"] = new SelectList(_context.TNgenders, "GenderId", "Gender", tNproductvariant.GenderId);
+            ViewData["SizeId"] = new SelectList(_context.TNsizes, "SizeId", "Size", tNproductvariant.SizeId);
+            ViewData["ThicknessId"] = new SelectList(_context.TNthicknesses, "ThicknessId", "Thickness", tNproductvariant.ThicknessId);
             return View(tNproductvariant);
         }
 

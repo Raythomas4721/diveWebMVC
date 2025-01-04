@@ -1,4 +1,4 @@
-﻿@model diveWebMVC.Models.TNproductvariant
+﻿@model diveWebMVC.Models.TNorder
 
 @{
     ViewData["Title"] = "Details";
@@ -7,55 +7,55 @@
 <h1>Details</h1>
 
 <div>
-    <h4>TNproductvariant</h4>
+    <h4>TNorder</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-                商品
+                會員編號
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Product.ProductName)
+            @Html.DisplayFor(model => model.Member.MemberId)
         </dd>
         <dt class = "col-sm-2">
-                顏色
+                送貨地址
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Color.Color)
+            @Html.DisplayFor(model => model.Address)
         </dd>
         <dt class = "col-sm-2">
-                性別款式
+                訂單日期
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender.Gender)
+            @Html.DisplayFor(model => model.OrderDate)
         </dd>
         <dt class = "col-sm-2">
-                尺寸
+                訂單狀態
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Size.Size)
+            @Html.DisplayFor(model => model.OrderStatus)
         </dd>
         <dt class = "col-sm-2">
-                厚度
+                付款狀態
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Thickness.Thickness)
+            @Html.DisplayFor(model => model.PaymentStatus)
         </dd>
         <dt class = "col-sm-2">
-                商品單價
+                總金額
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UnitPrice)
+            @Html.DisplayFor(model => model.TotalAmount)
         </dd>
         <dt class = "col-sm-2">
-                進貨量
+                創建日期
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Stock)
+            @Html.DisplayFor(model => model.CreatedDate)
         </dd>
     </dl>
 </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProductvariantsId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.OrderId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

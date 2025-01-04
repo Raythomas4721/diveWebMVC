@@ -8,7 +8,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<div class="container">
 <h1>Edit</h1>
 
 <hr />
@@ -18,22 +18,22 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
+                    <label asp-for="ProductName" class="control-label"> 商品名稱</label>
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UnitCost" class="control-label"></label>
+                    <label asp-for="UnitCost" class="control-label">進貨單價</label>
                 <input asp-for="UnitCost" class="form-control" />
                 <span asp-validation-for="UnitCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                    <label asp-for="Description" class="control-label">商品描述</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
+                    <label asp-for="Picture" class="control-label">商品照片</label>
                 <partial name="_ShowPicturePartial" />
                 <input type="file" asp-for="Picture" accept="image/*" class="form-control" />
 
@@ -44,7 +44,7 @@
         </form>
     </div>
 </div>
-
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
