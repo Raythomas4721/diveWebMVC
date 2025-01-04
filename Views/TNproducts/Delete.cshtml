@@ -1,4 +1,8 @@
 ﻿@model diveWebMVC.Models.TNproduct
+@section Styles {
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+}
 
 @{
     ViewData["Title"] = "Delete";
@@ -33,7 +37,7 @@
             @Html.DisplayNameFor(model => model.Picture)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Picture)
+            <partial name="_ShowPicturePartial" />
         </dd>
     </dl>
     
