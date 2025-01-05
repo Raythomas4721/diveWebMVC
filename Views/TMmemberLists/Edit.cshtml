@@ -77,6 +77,28 @@
 
 
 @section Scripts {
+	<script>
+		function previewImage(inputFile) {
+			if(inputFile.files && inputFile.files[0]) {
+				var allowType = "image.*";
+				if(inputFile.files[0].type.match(allowType)){
+					var reader = new FileReader();
+					reader.onload = function(e) {
+							$('#MemberPhoto').prev().attr('src',e.target.result);
+							$('#MemberPhoto').prev().attr('title',inputFile.files[0].MemberName);
+					}
+					reader.readAsDataURL(inputFile.files[0]);
+
+				}else {
+					alert("不支援的上傳格式");
+					inputFile.value = "";
+				}
+			}
+		}
+		$('#MemberPhoto').change(function() {
+			previewImage(this);
+		})
+	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
