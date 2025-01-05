@@ -60,7 +60,7 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            return View(tNproduct);
+            return PartialView("_Details", tNproduct);
         }
 
 

@@ -3,18 +3,17 @@
 
 @{
     TNproduct? products = await _context.TNproducts.FindAsync(Model.ProductId);
-    if (products != null && products.Picture != null)
-    {
-        <img style="width:320px;height:240px"
-             src="@Url.Action("GetPicture","TNproducts",new{id=Model.ProductId})"
-             title="@Html.DisplayFor(model => model.Description)" />
-
-    }
-    else
-    {
-        <img style="width:320px;height:240px"
-             src="@Url.Content("~/images/noimage.png")"
-             title="尚無圖片" />
-
-    }
+    var imageUrl = products != null && products.Picture != null
+                   ? Url.Action("GetPicture", "TNproducts", new { id = Model.ProductId })
+                   : Url.Content("~/images/noimage.png");
+    var imageTitle = products?.Description ?? "尚無圖片";
 }
+
+<!-- 包裹图片的 a 标签，用于启用 Lightbox 放大 -->
+<a href="@imageUrl" data-lightbox="product-image" data-title="@imageTitle">
+    <img src="@imageUrl" style="width:100%; max-width: 150px; height:auto;" alt="@imageTitle" />
+</a>
+    
+
+
+
