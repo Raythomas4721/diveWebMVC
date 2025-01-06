@@ -270,10 +270,25 @@
                                 <i class="material-icons">developer_board</i>
                                 二手商品管理
                             </a>
-                            <a class="mdl-navigation__link" href="forms.html">
-                                <i class="material-icons" role="presentation">person</i>
-                                課程管理
-                            </a>
+                            <div class="sub-navigation">
+                                <a class="mdl-navigation__link" asp-controller="TCcourses" asp-action="Index">
+                                    <i class="material-icons">water</i>  @* sports_marine、directions_boat、pool*@
+                                    課程管理
+                                    <i class="material-icons">keyboard_arrow_down</i>
+                                </a>
+                                <div class="mdl-navigation">
+                                    <a class="mdl-navigation__link" href="login.html">
+                                        課程分類
+                                    </a>
+                                    <a class="mdl-navigation__link" href="sign-up.html">
+                                        課程等級
+                                    </a>
+                                    <a class="mdl-navigation__link" href="forgot-password.html">
+                                        課程訂單
+                                    </a>
+
+                                </div>
+                            </div>
                             <a class="mdl-navigation__link" href="maps.html">
                                 <i class="material-icons" role="presentation">map</i>
                                 場地管理
