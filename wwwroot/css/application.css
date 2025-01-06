@@ -7240,7 +7240,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label {
 
     .mdl-grid--no-spacing > .mdl-cell--9-col,
     .mdl-grid--no-spacing > .mdl-cell--9-col-desktop.mdl-cell--9-col-desktop {
-        width: 75%;
+        width: 100%;
     }
 
     .mdl-cell--10-col,
