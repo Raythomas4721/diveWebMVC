@@ -19,9 +19,14 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TNproducts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(_context.TNproducts.Select(c => new TNproduct
+            IQueryable<TNproduct> result = _context.TNproducts;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                result = result.Where(s => s.ProductName.Contains(searchString));
+            }
+            var products = await result.Select(c => new TNproduct
             {
                 ProductId = c.ProductId,
                 ProductName = c.ProductName,
@@ -29,7 +34,8 @@ namespace diveWebMVC.Controllers
                 UnitCost = c.UnitCost,
                 Description = c.Description,
                 Picture = null
-            }));
+            }).ToListAsync();
+            return View(products);
         }
         public async Task<FileResult> GetPicture(int id)
         {
@@ -208,6 +214,33 @@ namespace diveWebMVC.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> searchName(string p)
+        {
+            if (string.IsNullOrEmpty(p))
+            {
+                return BadRequest("Search term is empty.");
+            }
+
+            // 查詢是否存在商品名稱完全匹配的商品
+            var products = await _context.TNproducts
+                .Where(e => e.ProductName.Contains(p))  // 使用 Contains 做模糊匹配
+                .ToListAsync();
+
+            // 如果找不到任何商品，返回 NotFound
+            if (!products.Any())
+            {
+                return NotFound("No products found.");
+            }
+
+            // 返回部分視圖，並將商品資料傳遞給視圖
+            return PartialView("_FindPartial", products);
+        }
+
+
+
+        //bool Exists = _context.TNproducts.Any(e => e.ProductName == p);
+        //return Exists ? "true" : "false";
 
         private bool TNproductExists(int id)
         {

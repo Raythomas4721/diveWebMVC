@@ -2,19 +2,21 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
 public partial class TNproduct
 {
     public int ProductId { get; set; }
-
+    [Display(Name = "商品名稱")]
+    [Required(ErrorMessage = "商品名稱未填寫")]
     public string ProductName { get; set; }
-
+    [Display(Name = "進貨成本")]
     public decimal? UnitCost { get; set; }
-
+    [Display(Name = "商品描述")]
     public string Description { get; set; }
-
+    [Display(Name = "商品照片")]
     public byte[] Picture { get; set; }
 
     public virtual ICollection<TNpicture> TNpictures { get; set; } = new List<TNpicture>();

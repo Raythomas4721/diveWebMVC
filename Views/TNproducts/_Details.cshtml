@@ -2,7 +2,7 @@
 @section Styles {
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="~/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
+    @* <link href="~/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" /> *@
    
 }
 
@@ -10,7 +10,6 @@
 <div class="container">
     <br>
     <div class="row">
-        <!-- 左边商品信息 -->
         <div class="col-sm-8">
             <dl class="row">
                 <dt class="col-sm-4">
@@ -36,10 +35,9 @@
             </dl>
         </div>
     </div>
-        <!-- 右边商品照片 -->
+        
     <div class="col-sm-4">
         <h5>商品照片</h5>
-        <!-- 渲染商品照片部分视图 -->
         <partial name="_ShowPicturePartial" model="@Model" />
     </div>
     </div>
@@ -49,5 +47,5 @@
     @* <a asp-action="Index">Back to List</a> *@
 </div>
 @section Scripts {
-    <script src="~/lib/lightbox2/js/lightbox.min.js"></script>
-}
+  @*   <script src="~/lib/lightbox2/js/lightbox.min.js"></script> *@
+ }
