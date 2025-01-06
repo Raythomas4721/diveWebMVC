@@ -1,0 +1,37 @@
+﻿@model diveWebMVC.Models.TSsiteDetail
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TMmemberList</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SiteId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VenueName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfPeople)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VenueAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Detail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.SiteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
