@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using System.Drawing;
 
 namespace diveWebMVC.Controllers
 {
@@ -21,7 +22,30 @@ namespace diveWebMVC.Controllers
         // GET: TMmemberLists
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TMmemberLists.ToListAsync());
+            return View(
+                _context.TMmemberLists.Select(c => new TMmemberList
+                {
+                    MemberId = c.MemberId,
+                    MemberName=c.MemberName,
+                    MemberGender = c.MemberGender,
+                    MemberPhone = c.MemberPhone,
+                    MemberEmail = c.MemberEmail,
+                    MemberAddress = c.MemberAddress,
+                    MemberPassword = c.MemberPassword,
+                    MemberPhoto = null,
+                    UrgentContact = c.UrgentContact,
+                    UrgentPhone = c.UrgentPhone,
+                    RecentLogin = c.RecentLogin
+                }));
+        }
+
+        // 加入GetPicture方法
+        public async Task<FileResult> GetPicture(int id)
+        {
+            TMmemberList? member = await _context.TMmemberLists.FindAsync(id);
+            byte[]? content = member?.MemberPhoto;
+            return File(content, "Image/jpeg");
+
         }
 
         // GET: TMmemberLists/Details/5
@@ -32,8 +56,21 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tMmemberList = await _context.TMmemberLists
-                .FirstOrDefaultAsync(m => m.MemberId == id);
+            var tMmemberList = await _context.TMmemberLists.Select(c => new TMmemberList
+            {
+                MemberId = c.MemberId,
+                MemberName = c.MemberName,
+                MemberGender = c.MemberGender,
+                MemberPhone = c.MemberPhone,
+                MemberEmail = c.MemberEmail,
+                MemberAddress = c.MemberAddress,
+                MemberPassword = c.MemberPassword,
+                MemberPhoto = null,
+                UrgentContact = c.UrgentContact,
+                UrgentPhone = c.UrgentPhone,
+                RecentLogin = c.RecentLogin
+
+            }).FirstOrDefaultAsync(m => m.MemberId == id);
             if (tMmemberList == null)
             {
                 return NotFound();
@@ -57,6 +94,13 @@ namespace diveWebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Form.Files["MemberPhoto"] != null)
+                {
+                    using (BinaryReader reader = new BinaryReader(Request.Form.Files["MemberPhoto"].OpenReadStream()))
+                    {
+                        tMmemberList.MemberPhoto = reader.ReadBytes((int)Request.Form.Files["MemberPhoto"].Length);
+                    }
+                }
                 _context.Add(tMmemberList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -72,7 +116,20 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tMmemberList = await _context.TMmemberLists.FindAsync(id);
+            var tMmemberList = await _context.TMmemberLists.Select(c => new TMmemberList
+            {
+                MemberId = c.MemberId,
+                MemberName = c.MemberName,
+                MemberGender = c.MemberGender,
+                MemberPhone = c.MemberPhone,
+                MemberEmail = c.MemberEmail,
+                MemberAddress = c.MemberAddress,
+                MemberPassword = c.MemberPassword,
+                MemberPhoto = null,
+                UrgentContact = c.UrgentContact,
+                UrgentPhone = c.UrgentPhone,
+                RecentLogin = c.RecentLogin
+            }).FirstOrDefaultAsync(m => m.MemberId == id);
             if (tMmemberList == null)
             {
                 return NotFound();
@@ -85,6 +142,8 @@ namespace diveWebMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [RequestFormLimits(MultipartBodyLengthLimit =1048000)]
+        [RequestSizeLimit(1048000)]
         public async Task<IActionResult> Edit(int id, [Bind("MemberId,MemberName,MemberGender,MemberPhone,MemberEmail,MemberAddress,MemberPassword,UrgentContact,UrgentPhone,MemberPhoto,RecentLogin")] TMmemberList tMmemberList)
         {
             if (id != tMmemberList.MemberId)
@@ -96,6 +155,20 @@ namespace diveWebMVC.Controllers
             {
                 try
                 {
+                    TMmemberList? m = await _context.TMmemberLists.FindAsync(tMmemberList.MemberId);
+                    if (Request.Form.Files["MemberPhoto"] != null)
+                    {
+                        using (BinaryReader reader = new BinaryReader(Request.Form.Files["MemberPhoto"].OpenReadStream()))
+                        {
+                            tMmemberList.MemberPhoto = reader.ReadBytes((int)Request.Form.Files["MemberPhoto"].Length);
+                        }
+                    }
+                    else
+                    {
+                        tMmemberList.MemberPhoto = m.MemberPhoto;
+                    }
+                    _context.Entry(m).State = EntityState.Detached;
+
                     _context.Update(tMmemberList);
                     await _context.SaveChangesAsync();
                 }
@@ -123,8 +196,20 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tMmemberList = await _context.TMmemberLists
-                .FirstOrDefaultAsync(m => m.MemberId == id);
+            var tMmemberList = await _context.TMmemberLists.Select(c => new TMmemberList
+            {
+                MemberId = c.MemberId,
+                MemberName = c.MemberName,
+                MemberGender = c.MemberGender,
+                MemberPhone = c.MemberPhone,
+                MemberEmail = c.MemberEmail,
+                MemberAddress = c.MemberAddress,
+                MemberPassword = c.MemberPassword,
+                MemberPhoto = null,
+                UrgentContact = c.UrgentContact,
+                UrgentPhone = c.UrgentPhone,
+                RecentLogin = c.RecentLogin
+            }).FirstOrDefaultAsync(m => m.MemberId == id);
             if (tMmemberList == null)
             {
                 return NotFound();

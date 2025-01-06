@@ -1,37 +1,42 @@
 ﻿@model diveWebMVC.Models.TNproduct
+@section Styles {
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+}
 
 @{
     ViewData["Title"] = "Edit";
 }
-
+<div class="container">
 <h1>Edit</h1>
 
-<h4>TNproduct</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
+                    <label asp-for="ProductName" class="control-label"> 商品名稱</label>
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UnitCost" class="control-label"></label>
+                    <label asp-for="UnitCost" class="control-label">進貨單價</label>
                 <input asp-for="UnitCost" class="form-control" />
                 <span asp-validation-for="UnitCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                    <label asp-for="Description" class="control-label">商品描述</label>
+                    <textarea asp-for="Description" cols="40" rows="5" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
-                <input asp-for="Picture" class="form-control" />
-                <span asp-validation-for="Picture" class="text-danger"></span>
+                    <label asp-for="Picture" class="control-label">商品照片</label>
+                <partial name="_ShowPicturePartial" />
+                <input type="file" asp-for="Picture" accept="image/*" class="form-control" />
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -39,11 +44,38 @@
         </form>
     </div>
 </div>
-
+</div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">回首頁</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+                    function previewImageFile(inputFile){
+                                if(inputFile.files[0]!=null){
+                                   var file=inputFile.files[0];
+                                    var allowType="image.*";
+                                    if(file.type.match(allowType)){
+                                        var reader=new FileReader();
+                                       reader.onload=function(e){
+                                            $("#Picture").prev().attr("src",e.target.result);
+                                            $("#Picture").prev().attr("title",file.name);
+                                        };
+                                        reader.readAsDataURL(file);
+                                        $('.btn').prop("disabled",false);
+                                    }
+                                    else{
+                                        alert("不支援上傳檔案格式");
+                                        inputFile.value="";
+                                        $('.btn').prop("disabled",true);
+                                    }
+                                }
+                    }
+        $("#Picture").on("change",function(){
+                        previewImageFile(this);
+        });
+
+    </script>
 }

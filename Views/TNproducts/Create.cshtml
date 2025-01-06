@@ -1,35 +1,51 @@
 ﻿@model diveWebMVC.Models.TNproduct
+@section Styles {
 
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            width: 80%; /* 设置表单宽度 */
+        }
+
+    </style>
+}
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="container" mt-4>
+<h3>新增商品</h3>
 
-<h4>TNproduct</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
+                <label asp-for="ProductName" class="control-label">商品名稱</label>
                 <input asp-for="ProductName" class="form-control" />
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UnitCost" class="control-label"></label>
+                <label asp-for="UnitCost" class="control-label">進貨單價</label>
                 <input asp-for="UnitCost" class="form-control" />
                 <span asp-validation-for="UnitCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label">商品描述</label>
+                  <textarea asp-for="Description" cols="40" rows="5"class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
-                <input asp-for="Picture" class="form-control" />
+                <label asp-for="Picture" class="control-label">商品照片</label>
+                <img id="imgPreview" class="img-fluid" src="@Url.Content("~/images/noimage.png")" title="尚無圖片" />
+                <input type="file" asp-for="Picture" accept="image/*" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,11 +54,39 @@
         </form>
     </div>
 </div>
-
+</div>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+                    function previewImageFile(inputFile){
+                                if(inputFile.files[0]!=null){
+                                   var file=inputFile.files[0];
+                                    var allowType="image.*";
+                                    if(file.type.match(allowType)){
+                                        var reader=new FileReader();
+                                       reader.onload=function(e){
+                                            $("#Picture").prev().attr("src",e.target.result);
+                                            $("#Picture").prev().attr("title",file.name);
+                                        };
+                                        reader.readAsDataURL(file);
+                                        $('.btn').prop("disabled",false);
+                                    }
+                                    else{
+                                        alert("不支援上傳檔案格式");
+                                        inputFile.value="";
+                                        $('.btn').prop("disabled",true);
+                                    }
+                                }
+                    }
+        $("#Picture").on("change",function(){
+                        previewImageFile(this);
+        });
+
+    </script>
 }
