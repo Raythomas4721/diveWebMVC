@@ -13,6 +13,7 @@
     <link href="~/css/getmdl-select.min.css" rel="stylesheet" />
     <link href="~/css/nv.d3.min.css" rel="stylesheet" />
     <link href="~/css/application.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" type="text/css">
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
@@ -238,19 +239,22 @@
                                 會員管理
                             </a>
                             <div class="sub-navigation">
-                                <a class="mdl-navigation__link" asp-controller="TNproducts" asp-action="Index">
+                                <a class="mdl-navigation__link">
                                     <i class="material-icons">view_comfy</i>
                                     新品管理
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                                 <div class="mdl-navigation">
-                                    <a class="mdl-navigation__link" href="ui-buttons.html">
-                                        Buttons
+                                    <a class="mdl-navigation__link" asp-controller="TNproducts" asp-action="Index">
+                                       商品管理
                                     </a>
-                                    <a class="mdl-navigation__link" href="ui-cards.html">
-                                        Cards
+                                    <a class="mdl-navigation__link" asp-controller="TNproductvariants" asp-action="Index">
+                                        庫存管理
                                     </a>
-                                    <a class="mdl-navigation__link" href="ui-colors.html">
+                                    <a class="mdl-navigation__link" asp-controller="TNorders" asp-action="Index">
+                                        訂單管理
+                                    </a>
+                                    @* <a class="mdl-navigation__link" href="ui-colors.html">
                                         Colors
                                     </a>
                                     <a class="mdl-navigation__link" href="ui-form-components.html">
@@ -264,7 +268,7 @@
                                     </a>
                                     <a class="mdl-navigation__link" href="ui-tables.html">
                                         Tables
-                                    </a>
+                                    </a> *@
                                 </div>
                             </div>
                             <a class="mdl-navigation__link" asp-controller="TUproducts" asp-action="Index">

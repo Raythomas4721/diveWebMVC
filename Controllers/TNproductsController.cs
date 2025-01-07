@@ -21,9 +21,23 @@ namespace diveWebMVC.Controllers
         // GET: TNproducts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TNproducts.ToListAsync());
-        }
+            return View(_context.TNproducts.Select(c => new TNproduct
+            {
+                ProductId = c.ProductId,
+                ProductName = c.ProductName,
 
+                UnitCost = c.UnitCost,
+                Description = c.Description,
+                Picture = null
+            }));
+        }
+        public async Task<FileResult> GetPicture(int id)
+        {
+
+            TNproduct? c = await _context.TNproducts.FindAsync(id);
+            byte[]? content = c?.Picture;
+            return File(content, "image/jpeg");
+        }
         // GET: TNproducts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -32,15 +46,23 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tNproduct = await _context.TNproducts
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+            var tNproduct = await _context.TNproducts.Select(c => new TNproduct
+            {
+                ProductId = c.ProductId,
+                ProductName = c.ProductName,
+
+                UnitCost = c.UnitCost,
+                Description = c.Description,
+                Picture = null
+            }).FirstOrDefaultAsync(m => m.ProductId == id);
             if (tNproduct == null)
             {
                 return NotFound();
             }
 
-            return View(tNproduct);
+            return PartialView("_Details", tNproduct);
         }
+
 
         // GET: TNproducts/Create
         public IActionResult Create()
@@ -57,6 +79,10 @@ namespace diveWebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Form.Files["Picture"] != null)
+                {
+                    ReadUpLoadImage(tNproduct);
+                }
                 _context.Add(tNproduct);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -72,7 +98,15 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tNproduct = await _context.TNproducts.FindAsync(id);
+            var tNproduct = await _context.TNproducts.Select(c => new TNproduct
+            {
+                ProductId = c.ProductId,
+                ProductName = c.ProductName,
+
+                UnitCost = c.UnitCost,
+                Description = c.Description,
+                Picture = null
+            }).FirstOrDefaultAsync(m => m.ProductId == id);
             if (tNproduct == null)
             {
                 return NotFound();
@@ -94,6 +128,19 @@ namespace diveWebMVC.Controllers
 
             if (ModelState.IsValid)
             {
+                TNproduct? c = await _context.TNproducts.FindAsync(id);
+                if (Request.Form.Files["Picture"] != null)
+                {
+                    ReadUpLoadImage(tNproduct);
+                }
+                else
+                {
+                    tNproduct.Picture = c.Picture;
+                }
+                _context.Entry(c).State = EntityState.Detached;
+
+
+
                 try
                 {
                     _context.Update(tNproduct);
@@ -114,6 +161,13 @@ namespace diveWebMVC.Controllers
             }
             return View(tNproduct);
         }
+        private void ReadUpLoadImage(TNproduct tNproduct)
+        {
+            using (BinaryReader reader = new BinaryReader(Request.Form.Files["Picture"].OpenReadStream()))
+            {
+                tNproduct.Picture = reader.ReadBytes((int)Request.Form.Files["Picture"].Length);
+            }
+        }
 
         // GET: TNproducts/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -123,8 +177,15 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            var tNproduct = await _context.TNproducts
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+            var tNproduct = await _context.TNproducts.Select(c => new TNproduct
+            {
+                ProductId = c.ProductId,
+                ProductName = c.ProductName,
+
+                UnitCost = c.UnitCost,
+                Description = c.Description,
+                Picture = null
+            }).FirstOrDefaultAsync(m => m.ProductId == id);
             if (tNproduct == null)
             {
                 return NotFound();

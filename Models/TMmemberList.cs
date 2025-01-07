@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
@@ -9,24 +10,32 @@ public partial class TMmemberList
 {
     public int MemberId { get; set; }
 
+    [Display(Name = "姓名")]
+    [Required (ErrorMessage ="姓名欄位未填寫")]
+    [StringLength(maximumLength:10,MinimumLength = 2,ErrorMessage ="姓名長度不符")]
     public string MemberName { get; set; }
-
+    [Display(Name = "性別")]
     public string MemberGender { get; set; }
-
+    [Display(Name = "電話")]
+    [Required(ErrorMessage = "電話欄位未填寫")]
+    [RegularExpression(@"^\+?[0-9]{1,3}[-\s]?[0-9]{7,12}$", ErrorMessage = "電話格式不正確")]
     public string MemberPhone { get; set; }
-
+    [Display(Name = "郵件")]
+    [Required(ErrorMessage = "郵件欄位未填寫")]
+    [EmailAddress(ErrorMessage = "郵件格式不正確")]
     public string MemberEmail { get; set; }
-
+    [Display(Name = "地址")]
     public string MemberAddress { get; set; }
-
+    [Display(Name = "密碼")]
+    [Required(ErrorMessage = "密碼欄位未填寫")]
     public string MemberPassword { get; set; }
-
+    [Display(Name = "緊急聯絡人")]
     public string UrgentContact { get; set; }
-
+    [Display(Name = "緊急連絡電話")]
     public string UrgentPhone { get; set; }
-
+    [Display(Name = "客戶照片")]
     public byte[] MemberPhoto { get; set; }
-
+    [Display(Name = "最後登入")]
     public DateTime? RecentLogin { get; set; }
 
     public virtual ICollection<TCorder> TCorders { get; set; } = new List<TCorder>();

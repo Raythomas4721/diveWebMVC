@@ -2,27 +2,39 @@
 
 @{
     ViewData["Title"] = "Index";
+    
+}
+@section Styles {
+    <style>
+        
+
+    </style>
+
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+
+
+
+<div class="container">
+<div id="result" style="text-align: left;"></div>
+    <span>
+    <a asp-action="Create"><i class="fa-solid fa-water fa-spin fa-spin-reverse"></i>Create New</a>
+</span>
+<table class="table table-bordered table-hover table-striped" >
+    <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                商品名稱
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UnitCost)
+                進貨單價
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                商品描述
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Picture)
+                商品照片
             </th>
             <th></th>
         </tr>
@@ -40,14 +52,52 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Picture)
+                    <partial name="_ShowPicturePartial" model="@item" />
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                       <button class="btn btn-primary" asp-action="Details" asp-route-id="@item.ProductId" onclick="showdetail(@item.ProductId)">Details</button> |
+                        <a class="btn btn-primary"  asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+@section Scripts
+{
+
+    <script>
+       
+         function showdetail(productId){
+            
+            // alert("greetAsync");
+              $.ajax({
+            type:"GET",
+             url:`https://localhost:7077/TNproducts/Details?id=${productId}`
+            }).done(data=>{
+               $("#result").html(data);
+             document.getElementById("result").scrollIntoView({ behavior: "smooth", block: "start" });
+            }).fail(err=>{
+                alert(`error:${err.status}`);
+            });
+        }
+
+        // function showdelete(productId){
+
+        //         alert("greetAsync");
+        //           $.ajax({
+        //         type:"POST",
+        //          url:"https:localhost:7077/TNproducts/Delete",
+        //           data:{
+                   
+        //     }
+        //         }).done(data=>{
+        //            $("#result").html(data);
+                
+        //         }).fail(err=>{
+        //             alert(`error:${err.status}`);
+        //         });
+        //     }
+        // </script>
+}
