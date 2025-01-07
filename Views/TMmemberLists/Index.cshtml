@@ -5,6 +5,9 @@
 }
 @section Styles {
     <style>
+        .modal-dialog-scrollable .modal-body {
+            max-height: 600px; 
+        }
     </style>
 }
 <div class="container">
@@ -12,22 +15,18 @@
         <h1>客戶列表</h1>
         <p>
             <!-- Button trigger modal -->
-            <a asp-action="Create" class="btn btn-success"  data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-sharp fa-solid fa-user-plus"></i> 建立新客戶  </a>
+            <a asp-action="Create" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa-sharp fa-solid fa-user-plus"></i> 建立新客戶  </a>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
+            <div class="modal fade " id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered  modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">模態框標題</h5>
+                            <h5 class="modal-title" id="createModalLabel">建立新客戶</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            這是模態框內容。
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-                            <button type="button" class="btn btn-primary">儲存變更</button>
+                        <div class="modal-body pb-5" id="modal-body-content">
+                            <!-- Create form will be loaded here dynamically -->
                         </div>
                     </div>
                 </div>
@@ -118,9 +117,21 @@
 
 @section Scripts {
     <script>
-        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'),  {
+        var myModal = new bootstrap.Modal(document.getElementById('createModal'),  {
             backdrop: false
-            
         })
+        $('#createModal').on('show.bs.modal', function (e) {
+            var modal = $(this);
+            $.ajax({
+                url: '@Url.Action("Create")',  
+                method: 'GET',
+                success: function (data) {
+                    modal.find('#modal-body-content').html(data); 
+                },
+                error: function () {
+                    alert('無法載入創建頁面');
+                }
+            });
+        });
     </script>
 }

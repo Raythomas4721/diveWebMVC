@@ -1,11 +1,11 @@
 ﻿@model TMmemberList
 @inject diveShopperContext _context
-@{
+@ {
 	TMmemberList? member = await _context.TMmemberLists.FindAsync(Model.MemberId);
 	if(member != null && member.MemberPhoto!=null) {
-		<img style="width:280px;height:320px" src='@Url.Action("GetPicture","TMmemberList",new {id = Model.MemberId})' title="@Model.MemberName" />
+		<img class="img-fluid" style="width:280px;height:320px" src='@Url.Action("GetPicture","TMmemberLists",new {id = Model.MemberId})' title="@Model.MemberName" />
 	}
 	else {
-		<img style="width:280px;height:320px" src='@Url.Content("~/images/NoPerson.png")' title="尚無圖片" />
+		<img class="img-fluid" style="width:280px;height:320px" src='@Url.Content("~/images/NoPerson.png")' title="尚無圖片" />
 	}
 }
