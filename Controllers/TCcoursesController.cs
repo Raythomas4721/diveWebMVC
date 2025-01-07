@@ -19,11 +19,12 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TCcourses
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var diveShopperContext = _context.TCcourses.Include(t => t.Coach).Include(t => t.CourseCategory).Include(t => t.Level);
-            return View(diveShopperContext);
+            return View();
         }
+        //從這裡繼續
+        
 
         // GET: TCcourses/Details/5
         public async Task<IActionResult> Details(int? id)

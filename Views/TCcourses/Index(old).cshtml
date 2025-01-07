@@ -1,0 +1,143 @@
+﻿@model IEnumerable<diveWebMVC.Models.TCcourse>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles
+{
+    <style>
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-accent-bg: transparent;
+            --bs-table-striped-color: #212529;
+            --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+            --bs-table-active-color: #212529;
+            --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+            --bs-table-hover-color: #212529;
+            --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            vertical-align: top;
+            border-color: #dee2e6;
+        }
+    </style>
+}
+
+<div>
+    <h1>課程管理</h1>
+    <p >
+        <a asp-action="Create" class="btn btn-primary btn-lg"><i class="fa-regular fa-square-plus fa-fade"></i> 新增課程</a>
+    </p>
+</div>
+
+<table class="table table-bordered  table-striped table-hover table-responsive">
+    <thead class="table-primary">
+        <tr>
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.CourseId) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.CourseCategory) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Level) *@
+            @* </th> *@
+
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Coach) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.CoursePrice) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Photo) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.CreatedAt) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.UpdatedAt) *@
+            @* </th> *@
+            <th>
+                課程編號
+            </th>
+            <th>
+                課程
+            </th>
+            <th>
+                等級
+            </th>
+            <th>
+                教練
+            </th>
+            <th>
+                價格
+            </th>
+            <th>
+                圖片
+            </th>
+            <th>
+                建立時間
+            </th>
+            <th>
+                更新時間
+            </th>
+            
+            
+            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCategory.CategoryName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coach.CoachName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoursePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Photo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            
+            
+           
+            <td>
+                <button class="btn btn-success btn-sm">
+                        <a asp-action="Edit" asp-route-id="@item.CourseId" style="color:white"><i class="fa-regular fa-pen-to-square"></i> 編輯</a>
+                </button>
+                    <button class="btn btn-warning btn-sm">
+                        <a asp-action="Details" asp-route-id="@item.CourseId" style="color:black"><i class="fa-regular fa-newspaper"></i> 詳情</a>
+                </button>
+                    <button class="btn btn-danger btn-sm">
+                        <a asp-action="Delete" asp-route-id="@item.CourseId" style="color:white"><i class="fa-regular fa-trash-can"></i> 刪除</a>
+                </button>
+                @* <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> | *@
+                @* <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> | *@
+                @* <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

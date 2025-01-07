@@ -13,7 +13,7 @@
     <link href="~/css/getmdl-select.min.css" rel="stylesheet" />
     <link href="~/css/nv.d3.min.css" rel="stylesheet" />
     <link href="~/css/application.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" asp-append-version="true" rel="stylesheet" type="text/css">
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
@@ -275,25 +275,29 @@
                                 <i class="material-icons">developer_board</i>
                                 二手商品管理
                             </a>
+                         
                             <div class="sub-navigation">
-                                <a class="mdl-navigation__link" asp-controller="TCcourses" asp-action="Index">
-                                    <i class="material-icons">water</i>  @* sports_marine、directions_boat、pool*@
+                                <a class="mdl-navigation__link" > 
+                                    <i class="material-icons">water</i>  @* sports_marine、directions_boat、pool*@ 
                                     課程管理
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                                 <div class="mdl-navigation">
-                                    <a class="mdl-navigation__link" asp-controller="TCcourseCategories" asp-action="Index">
-                                        課程分類
+                                    <a class="mdl-navigation__link" asp-controller="TCcourses" asp-action="Index">
+                                        課程
                                     </a>
+                                    <a class="mdl-navigation__link" asp-controller="TCcourseCategories" asp-action="Index" >
+                                        課程種類
+                                    </a> 
                                     <a class="mdl-navigation__link" href="sign-up.html">
-                                        課程等級
+                                        課程等級 
                                     </a>
                                     <a class="mdl-navigation__link" href="forgot-password.html">
-                                        課程訂單
-                                    </a>
+                                        課程訂單 
+                                    </a> 
 
-                                </div>
-                            </div>
+                                </div> 
+                            </div>                           
                             <a class="mdl-navigation__link" href="maps.html">
                                 <i class="material-icons" role="presentation">map</i>
                                 場地管理
@@ -578,6 +582,7 @@
     <script src="~/js/nv.d3.min.js"></script>
     <script src="~/js/scroll.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
