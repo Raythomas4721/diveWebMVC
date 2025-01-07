@@ -5,6 +5,10 @@
     {
       "library": "lightbox2@2.11.5",
       "destination": "wwwroot/lib/lightbox2/"
+    },
+    {
+      "library": "ag-grid@33.0.3",
+      "destination": "Views/TNproductvariants/ag-grid/"
     }
   ]
 }

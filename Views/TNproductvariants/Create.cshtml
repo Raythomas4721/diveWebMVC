@@ -4,66 +4,79 @@
     ViewData["Title"] = "Create";
 }
 <div class="container">
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+    <h5>新增商品庫存</h5>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
                     <label asp-for="ProductId" class="control-label">商品</label>
                     <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId" onchange="getproductname()">
-                    <option>----請選擇----</option>
+                        <option>----請選擇----</option>
                     </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SizeId" class="control-label">尺寸</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SizeId" class="control-label">尺寸</label>
                     <select id="sizeSelect" asp-for="SizeId" class="form-control" asp-items="ViewBag.SizeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ColorId" class="control-label">顏色 </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ColorId" class="control-label">顏色 </label>
                     <select id="colorSelect" asp-for="ColorId" class="form-control" asp-items="ViewBag.ColorId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThicknessId" class="control-label">厚度</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ThicknessId" class="control-label">厚度</label>
                     <select id="thicknessSelect" asp-for="ThicknessId" class="form-control" asp-items="ViewBag.ThicknessId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="GenderId" class="control-label">性別款式</label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderId" class="control-label">性別款式</label>
                     <select id="genderSelect" asp-for="GenderId" class="form-control" asp-items="ViewBag.GenderId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="UnitPrice" class="control-label">商品單價</label>
-                <input asp-for="UnitPrice" class="form-control" />
-                <span asp-validation-for="UnitPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stock" class="control-label">進貨量</label>
-                <input asp-for="Stock" class="form-control" />
-                <span asp-validation-for="Stock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                </div>
+                <div class="form-group">
+                    <label asp-for="UnitPrice" class="control-label">商品單價</label>
+                    <input asp-for="UnitPrice" class="form-control" />
+                    <span asp-validation-for="UnitPrice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Stock" class="control-label">進貨量</label>
+                    <input asp-for="Stock" class="form-control" />
+                    <span asp-validation-for="Stock" class="text-danger"></span>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="Create" class="btn btn-secondary" />
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-</div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">回到庫存列表</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
-        
+
         function getproductname(){
-              var productId = $("#ProductId").val();
-              var productName = $("#ProductId option:selected").text();
+          //選單回復可選狀態
+        $("#colorSelect").prop("disabled", false);
+        $("#thicknessSelect").prop("disabled", false);
+        $("#genderSelect").prop("disabled", false);
+        $("#sizeSelect").prop("disabled", false);
+         //選單回復可選預設選項
+         $("#colorSelect").prop('selectedIndex', 0); 
+        $("#thicknessSelect").prop('selectedIndex', 0); 
+        $("#genderSelect").prop('selectedIndex', 0);
+        $("#sizeSelect").prop('selectedIndex', 0);
+        //先確認有抓到商品id
+         var productId = $("#ProductId").val();
+         var productName = $("#ProductId option:selected").text();
         console.log("Selected ProductId: " + productId);
          console.log("Selected ProductName: " + productName);
         toggleDropdowns(productName);
-    
+
         }
         function toggleDropdowns(productName) {
         if (productName.includes("衣")) {
@@ -96,7 +109,6 @@
          $("#genderSelect").prop("disabled", true);
          $("#sizeSelect").prop("disabled", true);
             }else {
-
            $("#colorSelect").prop("disabled", true);
             $("#thicknessSelect").prop("disabled", true);
             $("#genderSelect").prop("disabled", true);

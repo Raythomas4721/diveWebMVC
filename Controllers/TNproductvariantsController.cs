@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace diveWebMVC.Controllers
 {
@@ -18,13 +21,53 @@ namespace diveWebMVC.Controllers
             _context = context;
         }
 
-        // GET: TNproductvariants
+        // GET: TNproductvariants/Index
         public async Task<IActionResult> Index()
         {
             var diveShopperContext = _context.TNproductvariants.Include(t => t.Product).Include(t => t.Color).Include(t => t.Gender).Include(t => t.Size).Include(t => t.Thickness);
             return View(diveShopperContext);
         }
+        // GET: TNproductvariants/IndexJson
+        public JsonResult IndexJson()
+        {
+            try
+            {
+                var diveShopperContext = _context.TNproductvariants
+                    .Include(t => t.Product)
+                    .Include(t => t.Color)
+                    .Include(t => t.Gender)
+                    .Include(t => t.Size)
+                    .Include(t => t.Thickness)
+                    .Select(pv => new
+                    {
+                        pv.ProductvariantsId,
+                        pv.ProductId,
+                        pv.SizeId,
+                        pv.ColorId,
+                        pv.ThicknessId,
+                        pv.GenderId,
+                        pv.UnitPrice,
+                        pv.Stock,
+                        ProductName = pv.Product.ProductName,  // 假設有 Product.Name 欄位
+                        SizeName = pv.Size.Size,        // 假設有 Size.Name 欄位
+                        ColorName = pv.Color.Color,      // 假設有 Color.Name 欄位
+                        ThicknessName = pv.Thickness.Thickness,  // 假設有 Thickness.Name 欄位
+                        GenderName = pv.Gender.Gender     // 假設有 Gender.Name 欄位
+                    })
+                    .ToList();
 
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                };
+                return Json(diveShopperContext, options);
+            }
+            catch (Exception ex)
+            {
+                // 可以在這裡記錄錯誤，或者處理異常
+                return null;
+            }
+        }
         // GET: TNproductvariants/Details/5
         public async Task<IActionResult> Details(int? id)
         {

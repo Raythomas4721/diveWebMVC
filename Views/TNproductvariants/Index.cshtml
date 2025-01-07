@@ -1,70 +1,86 @@
-﻿@model IEnumerable<diveWebMVC.Models.TNproductvariant>
+﻿@* @model IEnumerable<diveWebMVC.Models.TNproductvariant> *@
 
-@{
-    ViewData["Title"] = "Index";
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
 }
-
-
+<div class="container">
+    <div>
+<h3>商品庫存表</h3>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table table-bordered table-hover table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Size)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Thickness)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Stock)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Size.Size)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Thickness.Thickness)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductvariantsId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductvariantsId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductvariantsId">Delete</a>
-            </td>
-        </tr>
+</div>
+<div id="myGrid" class="ag-theme-alpine" style="height: 600px; width: 100%;"></div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community@28.2.0/dist/ag-grid-community.min.js"></script>
+    <script>
+        console.log(agGrid);
+
+        $(document).ready(function(){
+            // 定义列结构
+            var columnDefs = [
+                { headerName: "編號", field: "ProductvariantsId", width: 80 },
+                { headerName: "商品名稱", field: "ProductName", width: 180 },
+                { headerName: "尺寸", field: "SizeName", width: 120 },
+                { headerName: "顏色", field: "ColorName", width: 120 },
+                { headerName: "厚度", field: "ThicknessName", width: 120 },
+                { headerName: "性別款式", field: "GenderName", width: 120 },
+                { headerName: "商品單價", field: "UnitPrice", width: 120 },
+                { headerName: "庫存", field: "Stock", width: 120 },
+                {
+                    headerName: "操作",
+                    field: "actions",
+                    width: 600,
+                    cellRenderer: function(params) {
+                      const editUrl = `/TNproductvariants/Edit/${params.data.ProductvariantsId}`;
+                    const deleteUrl = `/TNproductvariants/Delete/${params.data.ProductvariantsId}`;
+
+                    // 返回包含 Edit 和 Delete 操作的 HTML
+                    return `
+                        <a class="btn btn-secondary" href="${editUrl}">Edit</a> |
+                        <a class="btn btn-danger" href="${deleteUrl}" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
+                    `;
+                    }
+                }
+            ];
+
+            // 配置 gridOptions
+            const gridOptions = {
+                columnDefs: columnDefs,
+                pagination: true,
+                paginationPageSize: 10,
+                defaultColDef: {
+                    sortable: true,
+                    filter: true,
+                }
+            };
+
+            // 初始化 AG-Grid
+            const gridDiv = document.querySelector("#myGrid");
+            new agGrid.Grid(gridDiv, gridOptions);
+
+            // 发送 AJAX 请求来获取数据
+            $.ajax({
+                type: 'GET',
+                url: "https://localhost:7077/TNproductvariants/IndexJson"
+            })
+            .done(function(data) {
+                console.log(data);  // 在控制台打印查看数据结构
+
+                // 需要从 data.$values 中提取数据
+                if (data && Array.isArray(data.$values)) {
+                    gridOptions.api.setRowData(data.$values);  // 使用 data.$values
+                } else {
+                    console.error("Received data is not an array.");
+                }
+            })
+            .fail(function(err) {
+                alert(`Error: ${err.status}`);
+            });
+        });
+    </script>
 }
-    </tbody>
-</table>
+

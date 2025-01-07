@@ -20,7 +20,7 @@
 }
 
 <div class="container" mt-4>
-<h3>新增商品</h3>
+<h5>新增商品</h5>
 
 <hr />
 <div class="row">
@@ -49,14 +49,14 @@
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-secondary" />
+                    <input type="submit" value="Create" class="btn btn-secondary" id="submitBtn" />
             </div>
         </form>
     </div>
 </div>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">回商品列表</a>
 </div>
 
 @section Scripts {
@@ -87,6 +87,8 @@
         $("#Picture").on("change",function(){
                         previewImageFile(this);
         });
-
+         $("#createForm").on("submit", function(){
+            $("#submitBtn").prop("disabled", true);  // Disable the submit button
+        });
     </script>
 }
