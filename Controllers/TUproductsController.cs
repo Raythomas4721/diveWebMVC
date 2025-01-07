@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using diveWebMVC.ViewModels;
+using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace diveWebMVC.Controllers
 {
@@ -19,10 +22,30 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TUproducts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString,int? categoryId)
         {
-            var diveShopperContext = _context.TUproducts.Include(t => t.Category).Include(t => t.ProductCondition).Include(t => t.Seller);
-            return View(await diveShopperContext.ToListAsync());
+            //var diveShopperContext = _context.TUproducts.Include(t => t.Category).Include(t => t.ProductCondition).Include(t => t.Seller); 
+            var productsQuery = _context.TUproducts.AsQueryable();
+            //if (!string.IsNullOrEmpty(searchString)) {
+            //    productsQuery = productsQuery.Where(p=>p.ProductName)
+            //}
+            var TUproductsviewmodels = await productsQuery.Select(p=>new TUproductsviewmodels {
+                ProductId=p.ProductId,
+                SellerId=p.SellerId,
+                //SellerName=p.SellerName,
+                CategoryId =p.CategoryId,
+                ProductName = p.ProductName,
+                ProductDescription = p.ProductDescription,
+                ProductPrice = p.ProductPrice,
+                UpdatedAt = p.UpdatedAt,
+                CreatedAt = p.CreatedAt,
+                ProductConditionId = p.ProductConditionId,
+                ProductStatus = p.ProductStatus,
+                Image = null,
+            }).ToListAsync();
+
+            //return View(await diveShopperContext.ToListAsync());
+            return View(TUproductsviewmodels);
         }
 
         // GET: TUproducts/Details/5
