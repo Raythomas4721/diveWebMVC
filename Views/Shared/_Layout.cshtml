@@ -13,6 +13,7 @@
     <link href="~/css/getmdl-select.min.css" rel="stylesheet" />
     <link href="~/css/nv.d3.min.css" rel="stylesheet" />
     <link href="~/css/application.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
@@ -277,7 +278,7 @@
                                     <i class="material-icons">keyboard_arrow_down</i>
                                 </a>
                                 <div class="mdl-navigation">
-                                    <a class="mdl-navigation__link" href="login.html">
+                                    <a class="mdl-navigation__link" asp-controller="TCcourseCategories" asp-action="Index">
                                         課程分類
                                     </a>
                                     <a class="mdl-navigation__link" href="sign-up.html">
