@@ -37,7 +37,7 @@
         <label class="form-label">篩選商品關鍵字:</label>
         <form method="post" asp-action="Index" asp-controller="TNproducts">
             <input id="searchString" name="searchString" class="form-control" type="text" placeholder="請輸入篩選關鍵字" value="@ViewBag.CurrentFilter" />
-            <button value="Search" class="btn btn-primary"><i class="fa-light fa-magnifying-glass-plus"></i>搜尋</button>
+            <button value="Search" class="btn btn-secondary"><i class="fa-light fa-magnifying-glass-plus"></i>搜尋</button>
         </form>
     </div>
     <table class="table table-bordered table-hover table-striped">
@@ -75,9 +75,9 @@
                         <partial name="_ShowPicturePartial" model="@item" />
                     </td>
                     <td>
-                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                        <button class="btn btn-primary" asp-action="Details" asp-route-id="@item.ProductId" onclick="showdetail(@item.ProductId)">Details</button> |
-                        <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                        <button class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ProductId" onclick="showdetail(@item.ProductId)">Details</button> |
+                        <a class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
                     </td>
                 </tr>
             }
