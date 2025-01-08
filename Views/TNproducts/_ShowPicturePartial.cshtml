@@ -5,14 +5,14 @@
     TNproduct? products = await _context.TNproducts.FindAsync(Model.ProductId);
     if (products != null && products.Picture != null)
     {
-        <img style="width:320px;height:240px"
+        <img style="width:280px;height:200px"
              src="@Url.Action("GetPicture","TNproducts",new{id=Model.ProductId})"
              title="@Html.DisplayFor(model => model.Description)" />
 
     }
     else
     {
-        <img style="width:320px;height:240px"
+        <img style="width:280px;height:200px"
              src="@Url.Content("~/images/noimage.png")"
              title="尚無圖片" />
 

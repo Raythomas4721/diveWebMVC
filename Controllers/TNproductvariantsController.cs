@@ -123,32 +123,6 @@ namespace diveWebMVC.Controllers
             return View(tNproductvariant);
         }
 
-//        [HttpGet]
-//        public IActionResult GetProductDetails(int id)
-//        {
-//            var product = _context.TNproducts.FirstOrDefault(p => p.ProductId == id);
-
-//            if (product == null)
-//            {
-//                return Json(new { success = false });
-//            }
-
-//            // 根据商品名称判断是否需要显示尺寸和性别
-//            bool needsSize = product.ProductName.Contains("衣") || product.ProductName.Contains("BCD") || product.ProductName.Contains("");
-//            bool needsGender = product.ProductName.Contains("衣");
-
-//            // 返回商品是否需要显示某些下拉框的标志
-//            var result = new
-//            {
-//                needsSize = needsSize,      // 是否需要尺寸
-//                needsGender = needsGender   // 是否需要性别
-//            };
-
-//            return Json(result);  // 返回 JSON 格式的数据
-//        }
-//}
-
-
 
         // GET: TNproductvariants/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -231,7 +205,8 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
 
-            return View(tNproductvariant);
+            return PartialView("_Delete", tNproductvariant);
+        
         }
 
         // POST: TNproductvariants/Delete/5
