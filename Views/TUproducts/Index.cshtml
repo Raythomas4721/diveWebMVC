@@ -61,6 +61,9 @@
                     @Html.DisplayNameFor(model => model.ProductName)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.ProductDescription)
                 </th>
                 <th>
@@ -94,6 +97,9 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        <img src="~/images/"/>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductDescription)
