@@ -2,36 +2,37 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
 public partial class TNproductvariant
 {
     public int ProductvariantsId { get; set; }
-
     public int? ProductId { get; set; }
-
     public int? SizeId { get; set; }
-
     public int? ColorId { get; set; }
 
     public int? ThicknessId { get; set; }
 
     public int? GenderId { get; set; }
-
+    [Display(Name = "商品單價")]
     public decimal? UnitPrice { get; set; }
-
+    [Display(Name = "庫存")]
     public int? Stock { get; set; }
+    [Display(Name = "顏色")]
 
     public virtual TNcolor Color { get; set; }
-
+    [Display(Name = "性別款式")]
     public virtual TNgender Gender { get; set; }
 
+    [Display(Name = "商品名稱")]
     public virtual TNproduct Product { get; set; }
 
+    [Display(Name = "尺寸")]
     public virtual TNsize Size { get; set; }
 
     public virtual ICollection<TNorderDetail> TNorderDetails { get; set; } = new List<TNorderDetail>();
-
+    [Display(Name = "厚度")]
     public virtual TNthickness Thickness { get; set; }
 }

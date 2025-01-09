@@ -2,12 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
 public partial class TNcolor
 {
     public int ColorId { get; set; }
+    [Display(Name = "顏色")]
 
     public string Color { get; set; }
 
