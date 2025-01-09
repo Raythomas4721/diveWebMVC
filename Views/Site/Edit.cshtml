@@ -4,12 +4,34 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+@section Styles{
+    <style>
+        .BacktoList {
+            float: right;
+        }
 
-<h4>TMmemberList</h4>
+        .form-control {
+            max-width: 400px; /* 根據需要調整這個值 */
+            width: 100%; /* 確保它們在小螢幕上也能適應 */
+            
+        }
+
+        .btn-spacing {
+            margin-left: 5px; /* 根據需要調整這個值 */
+            
+        }
+    </style>
+}
+
+
+<div>
+<h3>訂單修改</h3>
+</div>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
+
+<div class="container">
+    <div >
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SiteId" />
@@ -30,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Detail" class="control-label"></label>
-                <input asp-for="Detail" class="form-control" />
+                <textarea asp-for="Detail" class="form-control" rows="4"></textarea> <!-- 使用 textarea -->
                 <span asp-validation-for="Detail" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,15 +60,13 @@
                 <input asp-for="State" class="form-control" />
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div style="gap: 1000px;">
+                <input type="submit" button type="button" class="btn btn-danger" value="儲存" class="btn btn-primary" />
+                <a asp-action="Index" button type="button" class="btn btn-primary">返回清單</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

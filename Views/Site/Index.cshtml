@@ -4,15 +4,152 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@section Styles{
+    <style>
+        /* .container {
+            transform: translate(100px, 30px);
+            padding-bottom: 20px;  在容器底部添加內邊距
+                }*/
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+        .table {
+            transform: translate(100px, 50px);
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-size: 15px;
+            table-layout: fixed; /* 固定表格布局 */
+            width: 100%; /* 確保表格寬度為100% */
+            
+        }
+
+        .head-tr {
+            background-color: #FFC78E !important;
+            color: black;
+            padding: 10px;
+            text-align: left;
+        }
+        tr:nth-child(odd) {
+            background-color: #DDFFDD;
+        }
+        
+
+        
+
+        tr:nth-child(even) {
+            background-color: #D9E6FF;
+        }
+
+        
+
+        td {
+            padding: 10px;
+            border: 1px solid #ddd; /* 單元格邊框 */
+        }
+
+        /* 將操作連結設置為黑色 */
+        a {
+            color: black; /* 黑色文字 */
+        }
+
+        .action-link {
+            font-size: 18px; /* 調整字體大小 */
+            
+        }
+        .container {
+            transform: translate(100px,110px);
+        }
+
+        .Keywords {
+            transform: translate(1040px, 40px);
+        }
+
+        .containers {
+            transform: translate(1050px, 55px);
+        }
+        .detail-cell {
+            word-wrap: break-word; /* 允許單詞換行 */
+            white-space: normal; /* 正常空白處理 */
+            min-height: 50px; /* 設定最小高度，以便顯示更多內容 */
+        }
+
+        th {
+            overflow: hidden; /* 隱藏溢出的內容 */
+            text-overflow: ellipsis; /* 用省略號表示溢出的文本 */
+            white-space: nowrap; /* 不換行 */
+        }
+
+        td{
+            overflow: hidden; /* 隱藏溢出的內容 */
+            text-overflow: ellipsis; /* 用省略號表示溢出的文本 */
+            white-space: break-word; /* 允許單詞換行 */
+        }
+            /* 設定各列的寬度 */
+            th:nth-child(1), td:nth-child(1) {
+                width: 3%;
+            }
+            /* SiteId */
+            th:nth-child(2), td:nth-child(2) {
+                width: 10%;
+            }
+            /* VenueName */
+            th:nth-child(3), td:nth-child(3) {
+                width: 7%;
+            }
+            /* NumberOfPeople */
+            th:nth-child(4), td:nth-child(4) {
+                width: 15%;
+            }
+            /* VenueAddress */
+            th:nth-child(5), td:nth-child(5) {
+                width: 30%;
+            }
+            /* Detail */
+            th:nth-child(6), td:nth-child(6) {
+                width: 5%;
+            }
+        /* State */
+/*             th:nth-child(7), td:nth-child(7) {
+                width: 100%;
+                padding-top: 100%;
+            } */
+
+        #searchKeyword {
+            max-width: 200px; /* 設定最大寬度為200px，根據需要調整大小 */ <!--
+            新增 -->
+            width: 100%; /* 確保在小螢幕上也能適應 */ <!--
+            保持不變 -->
+        }
+    </style>
+}
+
+
+<h3 >場地明細</h3>
+
+<div class="container">
+    <p>
+        <a asp-action="Create" button type="button" class="btn btn-primary">新增資料</a>
+        
+    </p>
+</div>
+<div class="Keywords">
+
+    <div class="form-group">
+        <label for="searchKeyword">關鍵字搜尋:</label>
+        <input type="text" id="searchKeyword" class="form-control" placeholder="輸入關鍵字搜尋..." />
+        </div>
+</div>
+    <div class="containers">
+        <div class="form-group">
+        <button id="searchButton" class="btn btn-secondary mt-2">搜尋</button>
+        <button id="clearButton" type="button" class="btn btn-light mt-2" style="background-color: #FFC78E; color: black;">取消搜尋</button> <!-- 新增的取消按鈕 -->
+    </div>
+</div>
 <table class="table">
     <thead>
-        <tr>
+        <tr class="head-tr">
 
+            <th>
+                @Html.DisplayNameFor(model => model.SiteId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.VenueName)
             </th>
@@ -28,6 +165,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.State)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th> 
+            <!-- <span style="color:red;">新增這行</span> -->
+ 
+            <th></th>
 
         </tr>
     </thead>
@@ -35,6 +178,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SiteId)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.VenueName)
                 </td>
@@ -44,19 +190,63 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.VenueAddress)
                 </td>
-                <td>
+                <td class="detail-cell">
                     @Html.DisplayFor(modelItem => item.Detail)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.State)
                 </td>
+                <td>
+                    <img src="@Url.Content("~/images/" + item.Photo)" alt="@item.VenueName" style="width:100px;height:auto;" />
+                </td>
 
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.SiteId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.SiteId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.SiteId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.SiteId" class="action-link">修改</a> |
+                    <a asp-action="Details" asp-route-id="@item.SiteId" class="action-link">明細</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SiteId" class="action-link">刪除</a>
                 </td>
+                
             </tr>
         }
     </tbody>
 </table>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            var keyword = document.getElementById("searchKeyword").value.toLowerCase();
+            var rows = document.querySelectorAll(".table tbody tr");
+
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll("td");
+                var found = false;
+
+                cells.forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().includes(keyword)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = ""; // 顯示行
+                } else {
+                    row.style.display = "none"; // 隱藏行
+                }
+            });
+        });
+
+        // 取消搜尋功能
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("searchKeyword").value = ""; // 清空搜尋框
+            var rows = document.querySelectorAll(".table tbody tr");
+            rows.forEach(function(row) {
+                row.style.display = ""; // 顯示所有行
+            });
+        });
+    </script>
+}

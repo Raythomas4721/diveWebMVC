@@ -2,24 +2,30 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
 public partial class TSsiteDetail
 {
+    [Display(Name = "編號")]
     public int SiteId { get; set; }
-
+    [Display(Name = "場地名稱")]
     public string VenueName { get; set; }
-
+    [Display(Name = "可容納人數")]
     public int? NumberOfPeople { get; set; }
-
+    [Display(Name = "場地地址")]
     public string VenueAddress { get; set; }
-
+    [Display(Name = "詳細資料")]
     public string Detail { get; set; }
-
+    [Display(Name = "租用狀態")]
     public string State { get; set; }
+    [Display(Name = "照片")]
+    public byte[] Photo { get; set; }
 
     public virtual ICollection<TSorder> TSorders { get; set; } = new List<TSorder>();
 
     public virtual ICollection<TSphoto> TSphotos { get; set; } = new List<TSphoto>();
+
+    
 }
