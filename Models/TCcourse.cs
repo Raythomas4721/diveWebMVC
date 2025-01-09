@@ -17,7 +17,7 @@ public partial class TCcourse
 
     public decimal? CoursePrice { get; set; }
 
-    public byte[] Photo { get; set; }
+    public byte[]? Photo { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

@@ -8,11 +8,11 @@
 
 @* <h4>TCcourse</h4> *@
 @* <hr /> *@
-<div class="container">
+@*<div class="container">
     <div class="row">
         <div class="col-md-4">
             <h2>編輯課程</h2>
-            <form asp-action="Edit">
+            <form asp-action="Edit" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="CourseId" />
                 <div class="form-group">
@@ -36,9 +36,11 @@
                     <span asp-validation-for="CoursePrice" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Photo" class="control-label"></label>
-                    <input asp-for="Photo" class="form-control" />
-                    <span asp-validation-for="Photo" class="text-danger"></span>
+                    <div >
+                        <label asp-for="Photo" class="control-label"></label>
+                        <partial id="imgPreview" name="_ShowPhotoPartial" />
+                    <div/>
+                    <input type="file" class="form-control" asp-for="Photo" accept="image/*" />
                 </div>
                 <div class="form-group">
                     <label asp-for="CreatedAt" class="control-label"></label>
@@ -60,8 +62,122 @@
     <div class="mt-3">
         <a asp-action="Index" class="btn btn-secondary btn-block">Back to List</a>
     </div>
+</div>*@
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center">編輯課程</h2>
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- 隱藏字段：課程ID -->
+                <input type="hidden" asp-for="CourseId" />
+
+                <!-- 課程分類 -->
+                <div class="mb-3">
+                    <label asp-for="CourseCategoryId" class="control-label">課程分類</label>
+                    <select asp-for="CourseCategoryId" class="form-control" asp-items="ViewBag.CourseCategoryId"></select>
+                    <span asp-validation-for="CourseCategoryId" class="text-danger"></span>
+                </div>
+
+                <!-- 課程等級 -->
+                <div class="mb-3">
+                    <label asp-for="LevelId" class="control-label">課程等級</label>
+                    <select asp-for="LevelId" class="form-control" asp-items="ViewBag.LevelId"></select>
+                    <span asp-validation-for="LevelId" class="text-danger"></span>
+                </div>
+
+                <!-- 教練 -->
+                <div class="mb-3">
+                    <label asp-for="CoachId" class="control-label">教練</label>
+                    <select asp-for="CoachId" class="form-control" asp-items="ViewBag.CoachId"></select>
+                    <span asp-validation-for="CoachId" class="text-danger"></span>
+                </div>
+
+                <!-- 課程價格 -->
+                <div class="mb-3">
+                    <label asp-for="CoursePrice" class="control-label">課程價格</label>
+                    <input asp-for="CoursePrice" class="form-control" />
+                    <span asp-validation-for="CoursePrice" class="text-danger"></span>
+                </div>
+
+                <!-- 課程照片 -->
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label asp-for="Photo" class="control-label">課程照片</label>
+                        <partial name="_ShowPhotoPartial" />
+                    </div>
+                    <input type="file" class="form-control" asp-for="Photo" accept="image/*" />
+                </div>
+
+                <!-- 創建日期 -->
+                <div class="mb-3">
+                    <label asp-for="CreatedAt" class="control-label">創建日期</label>
+                    <input asp-for="CreatedAt" class="form-control" />
+                    <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                </div>
+
+                <!-- 更新日期 -->
+                <div class="mb-3">
+                    <label asp-for="UpdatedAt" class="control-label">更新日期</label>
+                    <input asp-for="UpdatedAt" class="form-control" />
+                    <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                </div>
+
+                <!-- 提交按鈕 -->
+                <div class="text-center mb-3">
+                    <input type="submit" value="保存" class="btn btn-primary btn-block" />
+                </div>
+            </form>
+        @* </div> *@
+    @* </div> *@
+
+    <!-- 返回列表按鈕 -->
+    <div class="text-center mt-3">
+        <a asp-action="Index" class="btn btn-secondary btn-block">返回列表</a>
+    </div>
 </div>
+</div>
+</div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function previewImageFile(inputFile){
+            //預覽+限制附檔名
+            if(inputFile.files[0] != null){
+                var file = inputFile.files[0];
+                var allowType="image.*"; //限制附檔名
+                if(file.type.match(allowType)){
+                    var reader =new FileReader();
+                    reader.onload=function(e){
+
+                        $('#Photo').prev().children().attr("src",e.target.result);
+                        $('#Photo').prev().children().attr("title",file.name);
+
+                        // $('#imgPreview').attr("src",e.target.result);
+                        // $('#imgPreview').attr("title",file.name);
+
+                        // $('#Photo').prev().attr("src",e.target.result);
+                        // $('#Photo').prev().attr("title",file.name);                      
+                    }
+                    reader.readAsDataURL(file);
+                    $('.btn').prop("disabled",false); //.prop()讀取屬性、設定屬性
+                }else{
+                    alert("不允許的檔案上傳類型!");
+                    inputFile.value="";
+                    $(".btn").prop("disabled",true);               
+                }            
+            }
+        }
+        $('#Photo').on('change',function(){  //change事件:用來監控表單元素的值變化的常見事件。
+            // alert("change");
+            previewImageFile(this);
+        });
+    </script>
 }

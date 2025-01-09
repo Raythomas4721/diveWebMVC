@@ -34,54 +34,54 @@
 <table class="table table-bordered  table-striped table-hover table-responsive">
     <thead class="table-primary">
         <tr>
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.CourseId) *@
-            @* </th> *@
-            @* <th> *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.CourseId)  *@
+            @* </th>  *@
+            @* <th>  *@
             @*     @Html.DisplayNameFor(model => model.CourseCategory) *@
-            @* </th> *@
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.Level) *@
-            @* </th> *@
+            @* </th>  *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.Level)  *@
+            @* </th>  *@
 
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.Coach) *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.Coach)  *@
+            @* </th>  *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.CoursePrice)  *@
+            @* </th>  *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.Photo)  *@
+            @* </th>  *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.CreatedAt)  *@
+            @* </th>  *@
+            @* <th>  *@
+            @*     @Html.DisplayNameFor(model => model.UpdatedAt)  *@
             @* </th> *@
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.CoursePrice) *@
-            @* </th> *@
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.Photo) *@
-            @* </th> *@
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.CreatedAt) *@
-            @* </th> *@
-            @* <th> *@
-            @*     @Html.DisplayNameFor(model => model.UpdatedAt) *@
-            @* </th> *@
             <th>
-                課程編號
-            </th>
-            <th>
-                課程
-            </th>
-            <th>
-                等級
-            </th>
-            <th>
-                教練
-            </th>
-            <th>
-                價格
-            </th>
-            <th>
-                圖片
-            </th>
-            <th>
-                建立時間
-            </th>
-            <th>
-                更新時間
+                課程編號 
+            </th> 
+            <th> 
+                課程 
+            </th> 
+            <th> 
+                等級 
+            </th> 
+            <th> 
+                教練 
+            </th> 
+            <th> 
+                價格 
+            </th> 
+            <th> 
+                圖片 
+            </th> 
+            <th> 
+                建立時間 
+            </th> 
+            <th> 
+                更新時間 
             </th>
             
             
@@ -111,7 +111,8 @@
                 @Html.DisplayFor(modelItem => item.CoursePrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
+                <partial name="_ShowPhotoPartial" model="@item"/>
+                @* @Html.DisplayFor(modelItem => item.Photo) *@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
