@@ -1,0 +1,32 @@
+﻿@model IEnumerable<diveWebMVC.Models.TNproduct>
+
+
+@if (Model.Any())
+{
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                    <partial name="_ShowPicturePartial" model="@item" />
+            </td>
+                <td>
+                </td>
+        </tr>
+}}
+else
+{
+    <tr>
+        <td colspan="5">No products found.</td>
+    </tr>
+}

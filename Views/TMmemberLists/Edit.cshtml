@@ -5,7 +5,7 @@
 }
 
 
-<div class="container">
+<div class="container pb-5">
 	<h2>會員修改</h2>
 	@* <h4>TMmemberList</h4> *@
 	<hr />
@@ -57,7 +57,7 @@
 				<div class="form-group"> 
 				     <label asp-for="MemberPhoto" class="control-label"></label> 
 					<partial name="_ShowPhotoPartial" />
-					<input type="file" asp-action="MemberPhoto" accept="image/*" class="form-control" />
+					<input type="file" asp-for="MemberPhoto" accept="image/*" class="form-control" />
 				    <span asp-validation-for="MemberPhoto" class="text-danger"></span>
 				</div>
 				@* <div class="form-group"> *@
@@ -85,7 +85,7 @@
 					var reader = new FileReader();
 					reader.onload = function(e) {
 							$('#MemberPhoto').prev().attr('src',e.target.result);
-							$('#MemberPhoto').prev().attr('title',inputFile.files[0].MemberName);
+							$('#MemberPhoto').prev().attr('title',inputFile.files[0].name);
 					}
 					reader.readAsDataURL(inputFile.files[0]);
 

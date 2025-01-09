@@ -4,7 +4,7 @@
 	ViewData["Title"] = "詳細資料";
 }
 
-<div class="container">
+<div class="container pb-5">
 	<h2>會員詳細資料</h2>
 
 	<div>
@@ -59,21 +59,21 @@
 			<dd class="col-sm-10">
 				@Html.DisplayFor(model => model.UrgentPhone)
 			</dd>
-			<dt class="col-sm-2"> 
-			 	@Html.DisplayNameFor(model => model.MemberPhoto) 
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.MemberPhoto)
 			</dt>
 			<dd class="col-sm-10">
-			<partial name="_ShowPhotoPartial" />
+				<partial name="_ShowPhotoPartial" />
 			</dd>
-				@* <dd class="col-sm-10"> *@
+			@* <dd class="col-sm-10"> *@
 			@* 	@Html.DisplayFor(model => model.MemberPhoto) *@
 			@* </dd> *@
-			<dt class="col-sm-2  mb-3">
-				@Html.DisplayNameFor(model => model.RecentLogin)
-			</dt>
-			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.RecentLogin)
-			</dd>
+			@* <dt class="col-sm-2  mb-3"> *@
+			@* 	@Html.DisplayNameFor(model => model.RecentLogin) *@
+			@* </dt> *@
+			@* <dd class="col-sm-10"> *@
+			@* 	@Html.DisplayFor(model => model.RecentLogin) *@
+			@* </dd> *@
 		</dl>
 	</div>
 	<div>

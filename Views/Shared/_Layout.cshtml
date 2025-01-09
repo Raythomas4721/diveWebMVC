@@ -235,7 +235,7 @@
                     <div class="scroll__container" id="scroll__container">
                         <nav class="mdl-navigation">
                             <a class="mdl-navigation__link" asp-controller="TMmemberLists" asp-action="Index">
-                                <i class="material-icons" role="presentation">dashboard</i>
+                                <i class="material-icons" role="presentation">person</i>
                                 會員管理
                             </a>
                             <div class="sub-navigation">
@@ -306,28 +306,11 @@
                                 <i class="material-icons">multiline_chart</i>
                                 訂單管理
                             </a>
-
-                            <div class="sub-navigation">
-                                <a class="mdl-navigation__link">
-                                    <i class="material-icons">pages</i>
-                                    管理員設定
-                                    <i class="material-icons">keyboard_arrow_down</i>
-                                </a>
-                                <div class="mdl-navigation">
-                                    <a class="mdl-navigation__link" href="login.html">
-                                        Sign in
-                                    </a>
-                                    <a class="mdl-navigation__link" href="sign-up.html">
-                                        Sign up
-                                    </a>
-                                    <a class="mdl-navigation__link" href="forgot-password.html">
-                                        Forgot password
-                                    </a>
-                                    <a class="mdl-navigation__link" href="404.html">
-                                        404
-                                    </a>
-                                </div>
-                            </div>
+                            
+                            <a class="mdl-navigation__link" asp-controller="TMadmins" asp-action="Index">
+                                <i class="material-icons">pages</i>
+                                管理員設定
+                            </a>
                             <div class="mdl-layout-spacer"></div>
                             <hr>
                             <a class="mdl-navigation__link" href="https://github.com/CreativeIT/getmdl-dashboard">

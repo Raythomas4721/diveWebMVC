@@ -1,7 +1,10 @@
 ﻿@model diveWebMVC.Models.TNproduct
+
+
 @section Styles {
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 
 }
 
@@ -9,7 +12,7 @@
     ViewData["Title"] = "Edit";
 }
 <div class="container">
-<h1>Edit</h1>
+<h5>編輯商品資訊</h5>
 
 <hr />
 <div class="row">
@@ -34,19 +37,20 @@
             </div>
             <div class="form-group">
                     <label asp-for="Picture" class="control-label">商品照片</label>
-                <partial name="_ShowPicturePartial" />
-                <input type="file" asp-for="Picture" accept="image/*" class="form-control" />
+                    <partial name="_ShowPicturePartial" />
+                    <input type="file" asp-for="Picture" name="files" accept="image/*" class="form-control" />
+
 
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn btn-secondary" />
             </div>
         </form>
     </div>
-</div>
-</div>
 <div>
-    <a asp-action="Index">回首頁</a>
+    <a style="color:darkslateblue" asp-action="Index">回商品列表</a>
+</div>
+</div>
 </div>
 
 @section Scripts {

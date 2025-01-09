@@ -44,7 +44,7 @@ namespace diveWebMVC.Controllers
         {
             TMmemberList? member = await _context.TMmemberLists.FindAsync(id);
             byte[]? content = member?.MemberPhoto;
-            return File(content, "Image/jpeg");
+            return File(content, "image/jpeg");
 
         }
 
@@ -82,7 +82,7 @@ namespace diveWebMVC.Controllers
         // GET: TMmemberLists/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: TMmemberLists/Create

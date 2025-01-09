@@ -1,53 +1,71 @@
 ﻿@model diveWebMVC.Models.TNproduct
-@section Styles {
 
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link href="~/lib/lightbox2/css/lightbox.min.css" rel="stylesheet" />
-   
+@{
+    // 給 Carousel 一個唯一 ID
+    var carouselId = $"carousel_{Model.ProductId}";
 }
 
-<h5>商品資訊</h5>
 <div class="container">
     <br>
     <div class="row">
-        <!-- 左边商品信息 -->
         <div class="col-sm-8">
             <dl class="row">
-                <dt class="col-sm-4">
-                    商品名稱
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.ProductName)
-                </dd>
+                <dt class="col-sm-4">商品名稱</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(m => m.ProductName)</dd>
 
-                <dt class="col-sm-4">
-                    進貨單價
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.UnitCost)
-                </dd>
+                <dt class="col-sm-4">進貨單價</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(m => m.UnitCost)</dd>
 
-                <dt class="col-sm-4">
-                    商品描述
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
+                <dt class="col-sm-4">商品描述</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(m => m.Description)</dd>
             </dl>
         </div>
+
+        <div class="col-sm-4">
+            <h5>商品照片</h5>
+
+            <!-- Bootstrap Carousel -->
+            <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @if (Model.TNpictures != null && Model.TNpictures.Any())
+                    {
+                        int index = 0;
+                        foreach (var pic in Model.TNpictures)
+                        {
+                            <div class="carousel-item @(index == 0 ? "active" : "")">
+                                <img src="@Url.Action("GetPictureByPicId", "TNproducts", new { picId = pic.PictureId })"
+                                     class="d-block w-100"
+                                     style="max-height:400px; object-fit:cover;"
+                                     alt="圖片" />
+                            </div>
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        <!-- 如果沒有任何圖片，就顯示預設圖 -->
+                        <div class="carousel-item active">
+                            <img src="~/images/noimage.png"
+                                 class="d-block w-100"
+                                 style="max-height:400px; object-fit:cover;"
+                                 alt="暫無圖片" />
+                        </div>
+                    }
+                </div>
+
+                <!-- 只有在多張圖片時，才顯示左右切換按鈕 -->
+                @if (Model.TNpictures != null && Model.TNpictures.Count > 1)
+                {
+                    <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                }
+            </div>
+        </div>
     </div>
-        <!-- 右边商品照片 -->
-    <div class="col-sm-4">
-        <h5>商品照片</h5>
-        <!-- 渲染商品照片部分视图 -->
-        <partial name="_ShowPicturePartial" model="@Model" />
-    </div>
-    </div>
-        
-<div>
-    @* <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> | *@
-    @* <a asp-action="Index">Back to List</a> *@
 </div>
-@section Scripts {
-    <script src="~/lib/lightbox2/js/lightbox.min.js"></script>
-}
