@@ -1,0 +1,54 @@
+﻿@model diveWebMVC.Models.TMadmin
+
+@{
+	ViewData["Title"] = "Details";
+}
+<div class="container">
+	<h1>Details</h1>
+
+	<div>
+		<hr />
+		<dl class="row">
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.UserName)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.UserName)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.PasswordHash)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.PasswordHash)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.Email)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.Email)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.RoleName)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.RoleName)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.CreateAt)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.CreateAt)
+			</dd>
+			<dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.LastLogin)
+			</dt>
+			<dd class="col-sm-10">
+				@Html.DisplayFor(model => model.LastLogin)
+			</dd>
+		</dl>
+	</div>
+	<div>
+		<a asp-action="Edit" asp-route-id="@Model?.AdminId">Edit</a> |
+		<a asp-action="Index">Back to List</a>
+	</div>
+</div>
