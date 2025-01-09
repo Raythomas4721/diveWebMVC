@@ -30,6 +30,12 @@
         <a asp-action="Create" class="btn btn-primary btn-lg"><i class="fa-regular fa-square-plus fa-fade"></i> 新增課程</a>
     </p>
 </div>
+<div class="form-group"> 
+    <label for="searchKeyword">關鍵字搜尋:</label> 
+    <input type="text" id="searchKeyword" class="form-control" placeholder="輸入關鍵字搜尋..." /> 
+    <button id="searchButton" class="btn btn-secondary mt-2">搜尋</button> 
+    <button id="clearButton" type="button" class="btn btn-light mt-2" style="background-color: #FFC78E; color: black;">取消搜尋</button> <!-- 新增的取消按鈕 --> 
+</div> 
 
 <table class="table table-bordered  table-striped table-hover table-responsive">
     <thead class="table-primary">
@@ -141,4 +147,43 @@
 }
     </tbody>
 </table>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            var keyword = document.getElementById("searchKeyword").value.toLowerCase();
+            var rows = document.querySelectorAll(".table tbody tr");
+
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll("td");
+                var found = false;
+
+                cells.forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().includes(keyword)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = ""; // 顯示行
+                } else {
+                    row.style.display = "none"; // 隱藏行
+                }
+            });
+        });
+
+        // 取消搜尋功能
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("searchKeyword").value = ""; // 清空搜尋框
+            var rows = document.querySelectorAll(".table tbody tr");
+            rows.forEach(function(row) {
+                row.style.display = ""; // 顯示所有行
+            });
+        });
+    </script>
+}
 
