@@ -15,6 +15,10 @@ namespace diveWebMVC.Controllers
 
         public IActionResult Index()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("AdminId")))
+            {
+                return RedirectToAction("Login", "TMadmins");
+            }
             return View();
         }
 

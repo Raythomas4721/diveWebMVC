@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using diveWebMVC.ViewModels;
 
 namespace diveWebMVC.Controllers
 {
@@ -35,7 +36,38 @@ namespace diveWebMVC.Controllers
             // 返回 JSON 格式的資料
             return Json(TMadmin);
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new LoginViewModel()); 
+        }
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var admin = _context.TMadmins
+                    .FirstOrDefault(a => a.UserName == model.UserName && a.PasswordHash == model.PasswordHash);
 
+                if (admin != null)
+                {
+                    // 登入成功，設定 Session 或 Cookie
+                    HttpContext.Session.SetString("AdminId", admin.AdminId.ToString());
+                    return RedirectToAction("Index", "Home"); // 跳轉到管理頁面
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+
+            return View(model);
+        }
+
+        // 登出功能
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
 
         // GET: TMadmins
         public async Task<IActionResult> Index()

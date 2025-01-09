@@ -17,6 +17,16 @@ builder.Services.AddDbContext<diveShopperContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("diveShopper"));
 });
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "diveWebMVC.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(5);
+    options.Cookie.IsEssential = true;
+    options.Cookie.HttpOnly = true;
+
+    options.Cookie.SecurePolicy= CookieSecurePolicy.Always;
+});
+
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
@@ -39,6 +49,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
