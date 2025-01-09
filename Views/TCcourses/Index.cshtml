@@ -1,0 +1,102 @@
+﻿@model IEnumerable<diveWebMVC.Models.TCcourse>
+
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <h1>課程管理</h1>
+    <p >
+        <a asp-action="Create" class="btn btn-primary btn-lg">新增課程</a>
+    </p>
+</div>
+
+
+
+<table class="table table-primary table-striped table-hover" >
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Coach)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoursePrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Photo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            
+            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCategory.CategoryName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Level.LevelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coach.CoachName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CoursePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Photo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            
+            
+           
+            <td>
+                <button class="btn btn-success btn-sm">
+                        <a asp-action="Edit" asp-route-id="@item.CourseId" style="color:white">編輯</a>
+                </button>
+                    <button class="btn btn-warning btn-sm">
+                    <a asp-action="Details" asp-route-id="@item.CourseId" style="color:black">明細</a>
+                </button>
+                    <button class="btn btn-danger btn-sm">
+                        <a asp-action="Delete" asp-route-id="@item.CourseId" style="color:white">刪除</a>
+                </button>
+                @* <a asp-action="Edit" asp-route-id="@item.CourseId">Edit</a> | *@
+                @* <a asp-action="Details" asp-route-id="@item.CourseId">Details</a> | *@
+                @* <a asp-action="Delete" asp-route-id="@item.CourseId">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
