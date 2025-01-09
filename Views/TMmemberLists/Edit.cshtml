@@ -84,8 +84,8 @@
 				if(inputFile.files[0].type.match(allowType)){
 					var reader = new FileReader();
 					reader.onload = function(e) {
-							$('#imgPreview').attr('src',e.target.result);
-							$('#imgPreview').attr('title',inputFile.files[0].name);
+							$('#MemberPhoto').prev().attr('src',e.target.result);
+							$('#MemberPhoto').prev().attr('title',inputFile.files[0].name);
 					}
 					reader.readAsDataURL(inputFile.files[0]);
 

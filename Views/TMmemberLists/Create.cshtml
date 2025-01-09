@@ -15,6 +15,7 @@
 				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 				<div class="row mb-3">
 					<div class="col-6">
+						<h6>會員基本資料</h6>
 						<div class="form-group mb-3">
 							<label asp-for="MemberName" class="control-label"></label>
 							<input asp-for="MemberName" class="form-control" />
@@ -42,10 +43,10 @@
 						</div>
 					</div>
 					<div class="col-6">
+						<h6 class="mb-4">會員照片</h6>
 						<div class="form-group mb-3">
-							<label asp-for="MemberPhoto" class="control-label"></label>
-							<img id="imgPreview" class="img-fluid" style="width:180px;height:260px" src='@Url.Content("~/images/NoPerson.png")' title="尚無圖片" />
-							<input type="file" class="form-control" asp-for="MemberPhoto" accept="image/*"  />
+							<img id="imgPreview" class="img-fluid mb-3" style="width:320px;height:200px" src='@Url.Content("~/images/NoPerson.png")' title="尚無圖片" />
+							<input type="file" class="form-control" asp-for="MemberPhoto" accept="image/*" />
 							<span asp-validation-for="MemberPhoto" class="text-danger"></span>
 						</div>
 					</div>
@@ -97,30 +98,10 @@
 	</div>
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        function previewImageFile(inputFile) {
-            // 預覽 限制副檔名
-            if(inputFile.files && inputFile.files[0]) {
-                var allowType = "image.*";
-                if(inputFile.files[0].type.match(allowType)) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#imgPreview').attr('src',e.target.result);
-                        $('#imgPreview').attr('title',inputFile.files[0].name );
-                    }
-                    reader.readAsDataURL(inputFile.files[0]);
-                    
-                }
-                else {
-                    alert("不支援上傳的檔案格式");
-                    // $(".btn").prop('disabled',true);
-                    inputFile.value = "";
-                }
-            }
-        }
-        $('#MemberPhoto').on("change",function() {
-            previewImageFile(this);
-        })
-    </script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+
+	</script>
 }
