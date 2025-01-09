@@ -29,6 +29,16 @@ namespace diveWebMVC.Controllers
             //if (!string.IsNullOrEmpty(searchString)) {
             //    productsQuery = productsQuery.Where(p=>p.ProductName)
             //}
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productsQuery = productsQuery.Where(p => p.ProductName.Contains(searchString));
+            }
+
+            if (categoryId.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
+            }
+
             var TUproductsviewmodels = await productsQuery.Select(p=>new TUproductsviewmodels {
                 ProductId=p.ProductId,
                 SellerId=p.SellerId,
@@ -41,9 +51,11 @@ namespace diveWebMVC.Controllers
                 CreatedAt = p.CreatedAt,
                 ProductConditionId = p.ProductConditionId,
                 ProductStatus = p.ProductStatus,
-                Image = null,
+                //Image = null,
+                TUproductImages = p.TUproductImages ?? new List<TUproductImage>()
             }).ToListAsync();
-
+            
+            
             //return View(await diveShopperContext.ToListAsync());
             return View(TUproductsviewmodels);
         }
@@ -194,6 +206,24 @@ namespace diveWebMVC.Controllers
         {
             return _context.TUproducts.Any(e => e.ProductId == id);
         }
-        
+        public async Task<IActionResult> GetPicture(int id)
+        {
+            var product = await _context.TUproducts
+                .Include(p => p.TUproductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product?.TUproductImages?.Any() == true)
+            {
+                var image = product.TUproductImages.FirstOrDefault(); // 假設您只想顯示第一張圖片
+                if (image?.Image != null)
+                {
+                    return File(image.Image, "image/jpeg");
+                }
+            }
+
+            // 如果沒有找到圖片或沒有圖片，返回一個默認圖片或404
+            return NotFound();
+        }
+
     }
 }
