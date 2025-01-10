@@ -20,23 +20,36 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TMmemberLists
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchText)
         {
-            return View(
-                _context.TMmemberLists.Select(c => new TMmemberList
-                {
-                    MemberId = c.MemberId,
-                    MemberName=c.MemberName,
-                    MemberGender = c.MemberGender,
-                    MemberPhone = c.MemberPhone,
-                    MemberEmail = c.MemberEmail,
-                    MemberAddress = c.MemberAddress,
-                    MemberPassword = c.MemberPassword,
-                    MemberPhoto = null,
-                    UrgentContact = c.UrgentContact,
-                    UrgentPhone = c.UrgentPhone,
-                    RecentLogin = c.RecentLogin
-                }));
+            // 查詢基礎資料
+            IQueryable<TMmemberList> query = _context.TMmemberLists;
+
+            // 若有搜尋文字，加入篩選條件
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(p => p.MemberName.Contains(searchText));
+            }
+
+            // 查詢並選取需要的欄位
+            var memberList = await query.Select(c => new TMmemberList
+            {
+                MemberId = c.MemberId,
+                MemberName = c.MemberName,
+                MemberGender = c.MemberGender,
+                MemberPhone = c.MemberPhone,
+                MemberEmail = c.MemberEmail,
+                MemberAddress = c.MemberAddress,
+                MemberPassword = c.MemberPassword,
+                MemberPhoto = null,
+                UrgentContact = c.UrgentContact,
+                UrgentPhone = c.UrgentPhone,
+                RecentLogin = c.RecentLogin
+            }).ToListAsync();
+
+            // 回傳資料至 View，並保留搜尋文字以供回填
+            ViewData["SearchText"] = searchText;
+            return View(memberList);
         }
 
         // 加入GetPicture方法

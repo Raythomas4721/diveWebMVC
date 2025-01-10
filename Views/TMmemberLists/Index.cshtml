@@ -15,7 +15,13 @@
 		<h3>客戶列表</h3>
 		<p>
 			<!-- Button trigger modal -->
+			<div class="d-flex">
 			<a asp-action="Create" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa-sharp fa-solid fa-user-plus"></i> 建立新客戶  </a>
+				<form method="GET" asp-action="Index" asp-controller="TMmemberLists" class="d-flex">
+					<input id="searchText" name="searchText" class="form-control" type="text" placeholder="請輸入篩選關鍵字" value="@ViewData["SearchText"]" />
+					<button value="submit" class="btn btn-info ms-2"><i class="fa-light fa-magnifying-glass-plus"></i>搜尋</button>
+				</form>
+			</div>
 
 			<!-- Modal -->
 			<div class="modal fade " id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
