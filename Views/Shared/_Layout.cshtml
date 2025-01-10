@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon notification" id="notification"
-                     data-badge="23">
+                     >
                     notifications_none
                 </div>
                 <!-- Notifications dropdown-->
@@ -92,7 +92,7 @@
                     </li>
                 </ul>
 
-                <div class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon message" id="inbox" data-badge="4">
+                <div class="material-icons mdl-badge mdl-badge--overlap mdl-button--icon message" id="inbox" >
                     mail_outline
                 </div>
                 <!-- Messages dropdown-->
@@ -155,8 +155,8 @@
                 </ul>
 
                 <div class="avatar-dropdown" id="icon">
-                    <span>Luke</span>
-                    <img src="images/Icon_header.png">
+                    <span>@ViewData["AdminName"]</span>
+                    <img src="~/images/Icon_header.png">
                 </div>
                 <!-- Account dropdawn-->
                 <ul class="mdl-menu mdl-list mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp account-dropdown"
@@ -164,8 +164,9 @@
                     <li class="mdl-list__item mdl-list__item--two-line">
                         <span class="mdl-list__item-primary-content">
                             <span class="material-icons mdl-list__item-avatar"></span>
-                            <span>Luke</span>
-                            <span class="mdl-list__item-sub-title">Luke@skywalker.com</span>
+                            <span>@ViewData["AdminName"]</span>
+                            <span class="mdl-list__item-sub-title">@ViewData["AdminEmail"] </span>
+                            @* <span class="mdl-list__item-sub-title">Luke@skywalker.com</span> *@
                         </span>
                     </li>
                     <li class="list__item--border-top"></li>
@@ -197,7 +198,7 @@
                             Settings
                         </span>
                     </li>
-                    <a href="login.html">
+                    <a asp-action="Logout" asp-controller="TMadmins">
                     <li class="mdl-menu__item mdl-list__item">
                         <span class="mdl-list__item-primary-content">
                             <i class="material-icons mdl-list__item-icon text-color--secondary">exit_to_app</i>
