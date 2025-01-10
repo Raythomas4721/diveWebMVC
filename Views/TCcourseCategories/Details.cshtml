@@ -4,39 +4,42 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>TCcourseCategory</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quota)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quota)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CourseCategoryId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container">
+    <div> 
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center">課程種類詳情</h2>
+            <dl class="row">
+                    <dt class="col-sm-3 h4">
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </dt>
+                    <dd class="col-sm-9 h4" style="font-weight: normal">
+                        @Html.DisplayFor(model => model.CategoryName)
+                    </dd>
+                    <dt class="col-sm-3 h4">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd class="col-sm-9 h4" style="font-weight: normal">
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                    <dt class="col-sm-3 h4">
+                        @Html.DisplayNameFor(model => model.Duration)
+                    </dt>
+                    <dd class="col-sm-9 h4" style="font-weight: normal">
+                        @Html.DisplayFor(model => model.Duration)
+                    </dd>
+                    <dt class="col-sm-3 h4">
+                        @Html.DisplayNameFor(model => model.Quota)
+                    </dt>
+                    <dd class="col-sm-9 h4" style="font-weight: normal">
+                        @Html.DisplayFor(model => model.Quota)
+                    </dd>
+            </dl>
+            <div class="text-center mb-3">
+                <a asp-action="Edit" asp-route-id="@Model?.CourseCategoryId" class="btn btn-primary">編輯課程種類</a>
+            </div>
+            <div class="text-center mt-3">
+                <a asp-action="Index" class="btn btn-secondary btn-block">返回列表</a>
+            </div>
+        </div>
+    </div>
 </div>
