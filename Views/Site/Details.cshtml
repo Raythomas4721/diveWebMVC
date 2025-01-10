@@ -5,10 +5,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h3>訂單明細</h3>
+
 
 <div class="container">
-
+    <h3>訂單明細</h3>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -54,8 +54,7 @@
         </dd>
 
     </dl>
-</div>
-<div>
+
     <a asp-action="Edit" button type="button" class="btn btn-danger" asp-route-id="@Model?.SiteId">修改</a> |
     <a asp-action="Index" button type="button" class="btn btn-primary">返回</a>
 </div>

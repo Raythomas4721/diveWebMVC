@@ -6,20 +6,23 @@
 
 @section Styles{
     <style>
-        /* .container {
-            transform: translate(100px, 30px);
-            padding-bottom: 20px;  在容器底部添加內邊距
-                }*/
+        .table{
+            position: relative;
+        }
+        .container {
+            transform: translate(0px, 0px);
+            padding-bottom: 20px;  在容器底部添加內邊距 
+                }
 
-        .table {
+        /* .table {
             transform: translate(100px, 50px);
             border: 1px solid black;
             border-collapse: collapse;
             font-size: 15px;
-            table-layout: fixed; /* 固定表格布局 */
-            width: 100%; /* 確保表格寬度為100% */
-            
-        }
+            table-layout: fixed;  固定表格布局 
+            width: 100%;  確保表格寬度為100%
+
+                }*/
 
         .head-tr {
             background-color: #FFC78E !important;
@@ -54,16 +57,22 @@
             font-size: 18px; /* 調整字體大小 */
             
         }
-        .container {
-            transform: translate(100px,110px);
+        .Creates {
+            /* transform: translate(100px,110px); */
+            text-align: left;
+            transform: translate(0px, 50px);
         }
 
         .Keywords {
-            transform: translate(1040px, 40px);
+            /* transform: translate(1040px, 40px); */
+            float: right;
+
         }
 
         .containers {
-            transform: translate(1050px, 55px);
+            /* transform: translate(1050px, 55px); */
+            float: right;
+
         }
         .detail-cell {
             word-wrap: break-word; /* 允許單詞換行 */
@@ -112,24 +121,25 @@
                 padding-top: 100%;
             } */
 
-        #searchKeyword {
-            max-width: 200px; /* 設定最大寬度為200px，根據需要調整大小 */ <!--
-            新增 -->
-            width: 100%; /* 確保在小螢幕上也能適應 */ <!--
-            保持不變 -->
+         #searchKeyword {
+            max-width: 200px; /* 設定最大寬度為200px，根據需要調整大小  <!--新增 -->*/
+            width: 100%; /* 確保在小螢幕上也能適應  <!--保持不變 -->*/
         }
+        
     </style>
 }
 
 
-<h3 >場地明細</h3>
+
 
 <div class="container">
-    <p>
+
+    <h3>場地明細</h3>
+@*     <div class="Creates">
         <a asp-action="Create" button type="button" class="btn btn-primary">新增資料</a>
         
-    </p>
-</div>
+    </div>
+
 <div class="Keywords">
 
     <div class="form-group">
@@ -142,7 +152,22 @@
         <button id="searchButton" class="btn btn-secondary mt-2">搜尋</button>
         <button id="clearButton" type="button" class="btn btn-light mt-2" style="background-color: #FFC78E; color: black;">取消搜尋</button> <!-- 新增的取消按鈕 -->
     </div>
-</div>
+</div> *@
+    <div class="form-group d-flex align-items-center justify-content-between gap-3">
+        <a asp-action="Create" button type="button" class="btn btn-primary">新增資料</a>
+        <div class="d-flex justify-content-end">
+            <div class="me-3">
+                <label for="searchKeyword" class="form-label">關鍵字搜尋:</label>
+                <input type="text" id="searchKeyword" class="form-control" placeholder="輸入關鍵字搜尋..." />
+            </div>
+            <div class="mt-4">
+                <button id="searchButton" class="btn btn-secondary  mt-2">搜尋</button>
+                <button id="clearButton" type="button" class="btn btn-light mt-2">取消搜尋</button> <!-- 新增的取消按鈕 -->
+            </div>
+        </div>
+
+    </div>
+
 <table class="table">
     <thead>
         <tr class="head-tr">
@@ -210,7 +235,7 @@
         }
     </tbody>
 </table>
-
+</div>
 
 @section Scripts {
     @{
