@@ -109,18 +109,18 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ProductName)
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Image)
-                </th>
+                </th> *@
                 <th>
                     @Html.DisplayNameFor(model => model.ProductDescription)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ProductPrice)
                 </th>
-                <th class="wide-column">
+                <@* th class="wide-column">
                     @Html.DisplayNameFor(model => model.UpdatedAt)
-                </th>
+                </th> *@
                 <th class="wide-column">
                     @Html.DisplayNameFor(model => model.CreatedAt)
                 </th>
@@ -147,21 +147,21 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
-                    <td>
+                    @* <td>
                         <img src="@Url.Action("GetPicture", "TUproducts", new { id = item.ProductId })"
                              class="product-image"
                              onerror="this.onerror=null; this.src='@Url.Content("~/images/err2.png")';" />
 
-                    </td>
+                    </td> *@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductDescription)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductPrice)
                     </td>
-                    <td class="wide-column">
+                    @* <td class="wide-column">
                         @Html.DisplayFor(modelItem => item.UpdatedAt)
-                    </td>
+                    </td> *@
                     <td class="wide-column">
                         @Html.DisplayFor(modelItem => item.CreatedAt)
                     </td>
