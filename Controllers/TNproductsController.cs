@@ -234,26 +234,16 @@ namespace diveWebMVC.Controllers
         // GET: TNproducts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var tNproduct = await _context.TNproducts.Select(c => new TNproduct
-            {
-                ProductId = c.ProductId,
-                ProductName = c.ProductName,
+            var tNproduct = await _context.TNproducts
+                                         .Include(p => p.TNpictures)
+                                          .FirstOrDefaultAsync(m => m.ProductId == id);
 
-                UnitCost = c.UnitCost,
-                Description = c.Description,
-                Picture = null
-            }).Include(p => p.TNpictures).FirstOrDefaultAsync(m => m.ProductId == id);
-            if (tNproduct == null)
-            {
-                return NotFound();
-            }
+            if (tNproduct == null) return NotFound();
 
             return View(tNproduct);
+            
         }
 
         // POST: TNproducts/Delete/5
@@ -264,7 +254,16 @@ namespace diveWebMVC.Controllers
             var tNproduct = await _context.TNproducts.FindAsync(id);
             if (tNproduct != null)
             {
+                foreach (var picture in tNproduct.TNpictures)
+                {
+                    _context.TNpictures.Remove(picture);
+                }
+
+                // 刪除商品
                 _context.TNproducts.Remove(tNproduct);
+
+                // 保存變更
+                await _context.SaveChangesAsync();
             }
 
             await _context.SaveChangesAsync();

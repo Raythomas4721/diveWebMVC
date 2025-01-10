@@ -15,7 +15,7 @@
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">確認刪除商品庫存</h5>
@@ -40,18 +40,18 @@
         $(document).ready(function(){
             // 定义列结构
             var columnDefs = [
-                { headerName: "編號", field: "ProductvariantsId", width: 80 },
-                { headerName: "商品名稱", field: "ProductName", width: 180 },
+                { headerName: "編號", field: "ProductvariantsId", width: 100 },
+                { headerName: "商品名稱", field: "ProductName", width: 200 },
                 { headerName: "尺寸", field: "SizeName", width: 120 },
                 { headerName: "顏色", field: "ColorName", width: 120 },
                 { headerName: "厚度", field: "ThicknessName", width: 120 },
                 { headerName: "性別款式", field: "GenderName", width: 120 },
-                { headerName: "商品單價", field: "UnitPrice", width: 120 },
-                { headerName: "庫存", field: "Stock", width: 120 },
+                { headerName: "商品單價", field: "UnitPrice", width: 150 },
+                { headerName: "庫存", field: "Stock", width: 150 },
                 {
                     headerName: "操作",
                     field: "actions",
-                    width: 600,
+                    width: 200,
                     cellRenderer: function(params) {
                       const editUrl = `/TNproductvariants/Edit/${params.data.ProductvariantsId}`;
                     const deleteUrl = `/TNproductvariants/Delete/${params.data.ProductvariantsId}`;

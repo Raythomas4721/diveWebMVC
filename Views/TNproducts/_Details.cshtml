@@ -25,7 +25,7 @@
             <h5>商品照片</h5>
 
             <!-- Bootstrap Carousel -->
-            <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
+            <div id="@carouselId" class="carousel slide modal-lg" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @if (Model.TNpictures != null && Model.TNpictures.Any())
                     {
@@ -35,7 +35,7 @@
                             <div class="carousel-item @(index == 0 ? "active" : "")">
                                 <img src="@Url.Action("GetPictureByPicId", "TNproducts", new { picId = pic.PictureId })"
                                      class="d-block w-100"
-                                     style="max-height:400px; object-fit:cover;"
+                                     style="max-height:600px; object-fit:cover;"
                                      alt="圖片" />
                             </div>
                             index++;
@@ -47,7 +47,7 @@
                         <div class="carousel-item active">
                             <img src="~/images/noimage.png"
                                  class="d-block w-100"
-                                 style="max-height:400px; object-fit:cover;"
+                                 style="max-height:600px; object-fit:cover;"
                                  alt="暫無圖片" />
                         </div>
                     }
