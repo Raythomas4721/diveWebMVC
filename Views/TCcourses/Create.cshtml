@@ -69,20 +69,22 @@
                 <!-- 課程分類 -->
                 <div class="mb-3">
                     <label asp-for="CourseCategoryId" class="control-label">課程分類</label>
-                    @* <select asp-for="CourseCategoryId" class="form-control" asp-items="ViewBag.CourseCategoryId"></select> *@
-                    <select asp-for="CourseCategoryId" class="form-control" asp-items="ViewBag.CategoryName"></select>
+                    <select asp-for="CourseCategoryId" class="form-control" asp-items="ViewBag.CourseCategoryId"></select>
+                    @* <select asp-for="CourseCategoryId" class="form-control" asp-items="ViewBag.CategoryName"></select> *@
                 </div>
 
                 <!-- 課程等級 -->
                 <div class="mb-3">
                     <label asp-for="LevelId" class="control-label">課程等級</label>
                     <select asp-for="LevelId" class="form-control" asp-items="ViewBag.LevelId"></select>
+                    @* <select asp-for="LevelId" class="form-control" asp-items="ViewBag.LevelName"></select> *@
                 </div>
 
                 <!-- 教練 -->
                 <div class="mb-3">
                     <label asp-for="CoachId" class="control-label">教練</label>
                     <select asp-for="CoachId" class="form-control" asp-items="ViewBag.CoachId"></select>
+                    @* <select asp-for="CoachId" class="form-control" asp-items="ViewBag.CoachName"></select> *@
                 </div>
 
                 <!-- 課程價格 -->
@@ -108,12 +110,12 @@
                     <span asp-validation-for="CreatedAt" class="text-danger"></span>
                 </div>
 
-                <!-- 更新日期 -->
-                <div class="mb-3">
-                    <label asp-for="UpdatedAt" class="control-label">更新日期</label>
-                    <input asp-for="UpdatedAt" class="form-control" />
-                    <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-                </div>
+                @* <!-- 更新日期 --> *@
+                @* <div class="mb-3"> *@
+                @*     <label asp-for="UpdatedAt" class="control-label">更新日期</label> *@
+                @*     <input asp-for="UpdatedAt" class="form-control" /> *@
+                @*     <span asp-validation-for="UpdatedAt" class="text-danger"></span> *@
+                @* </div> *@
 
                 <!-- 提交按鈕 -->
                 <div class="text-center mb-3">

@@ -76,21 +76,24 @@ namespace diveWebMVC.Controllers
             {
                 return NotFound();
             }
-            //var tCcourse = await _context.TCcourses
-            //    .Include(t => t.Coach)
-            //    .Include(t => t.CourseCategory)
-            //    .Include(t => t.Level)
-            //    .Select(c => new TCcourse
-            //    { //FirstOrDefaultAsync沒有Select -> 改FindAsync(傳主索引鍵)
-            //        CourseId = c.CourseId,
-            //        CourseCategoryId = c.CourseCategoryId,
-            //        LevelId = c.LevelId,
-            //        CoachId = c.CoachId,
-            //        CoursePrice = c.CoursePrice,
-            //        Photo = null,
-            //        CreatedAt = c.CreatedAt,
-            //        UpdatedAt = c.UpdatedAt
-            //    }).FirstOrDefaultAsync(c => c.CourseId == id); 
+
+            /*var tCcourse = await _context.TCcourses
+                .Include(t => t.Coach)
+                .Include(t => t.CourseCategory)
+                .Include(t => t.Level)
+                .Select(c => new TCcourse
+                { //FirstOrDefaultAsync沒有Select -> 改FindAsync(傳主索引鍵)
+                    CourseId = c.CourseId,
+                    CourseCategoryId = c.CourseCategoryId,
+                    LevelId = c.LevelId,
+                    CoachId = c.CoachId,
+                    CoursePrice = c.CoursePrice,
+                    Photo = null,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.UpdatedAt
+                }).FirstOrDefaultAsync(c => c.CourseId == id);*/
+
+
             var tCcourse = await _context.TCcourses
                 .Include(t => t.Coach)
                 .Include(t => t.CourseCategory)
@@ -107,21 +110,27 @@ namespace diveWebMVC.Controllers
         // GET: TCcourses/Create
         public IActionResult Create()
         {
-            ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachId");
-            ViewData["CoachName"] = new SelectList(_context.TMcoaches, "CoachName", "CoachName");
+            /*ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachId");
+            //ViewData["CoachName"] = new SelectList(_context.TMcoaches, "CoachName", "CoachName");
             ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CourseCategoryId");
-            ViewData["CategoryName"] = new SelectList(_context.TCcourseCategories, "CategoryName", "CategoryName");
+            //ViewData["CategoryName"] = new SelectList(_context.TCcourseCategories, "CategoryName", "CategoryName");
             ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelId");
-            ViewData["LevelName"] = new SelectList(_context.TCcourseLevels, "LevelName", "LevelName");
+            //ViewData["LevelName"] = new SelectList(_context.TCcourseLevels, "LevelName", "LevelName");
+            return View();*/
+
+            ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachName"); 
+            ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CategoryName");
+            ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelName"); 
             return View();
         }
 
-        // POST: TCcourses/Create
+        /*// POST: TCcourses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseId,CourseCategoryId,LevelId,CoachId,CoursePrice,Photo,CreatedAt,UpdatedAt")] TCcourse tCcourse)
+        //public async Task<IActionResult> Create([Bind("CourseCategoryId,LevelId,CoachId,CoursePrice,Photo")] TCcourse tCcourse)
         {
             if (ModelState.IsValid)
             {
@@ -140,10 +149,42 @@ namespace diveWebMVC.Controllers
             ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachId", tCcourse.CoachId);
             ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CourseCategoryId", tCcourse.CourseCategoryId);
             ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelId", tCcourse.LevelId);
+            //ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachName", tCcourse.CoachId);
+            //ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CategoryName", tCcourse.CourseCategoryId);
+            //ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelName", tCcourse.LevelId);
+            return View(tCcourse);
+        }*/
+
+        // POST: TCcourses/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("CourseId,CourseCategoryId,LevelId,CoachId,CoursePrice,Photo,CreatedAt,UpdatedAt")] TCcourse tCcourse)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Request.Form.Files["Photo"] != null)
+                {
+                    using (BinaryReader reader = new BinaryReader(Request.Form.Files["Photo"].OpenReadStream()))
+                    {
+                        tCcourse.Photo = reader.ReadBytes((int)Request.Form.Files["Photo"].Length);
+                    }
+                }
+
+                _context.Add(tCcourse);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachName", tCcourse.CoachId);
+            ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CategoryName", tCcourse.CourseCategoryId);
+            ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelName", tCcourse.LevelId);
             return View(tCcourse);
         }
 
-        // GET: TCcourses/Edit/5
+
+        /*// GET: TCcourses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -159,8 +200,9 @@ namespace diveWebMVC.Controllers
                 CoachId = c.CoachId,
                 CoursePrice = c.CoursePrice,
                 Photo = null,
-                CreatedAt = c.CreatedAt,
-                UpdatedAt = c.UpdatedAt
+                //CreatedAt = c.CreatedAt,
+                //UpdatedAt = c.UpdatedAt
+                UpdatedAt = DateTime.Now
             }).FirstOrDefaultAsync(m => m.CourseId == id);
             //var tCcourse = await _context.TCcourses.FindAsync(id);
             
@@ -169,12 +211,39 @@ namespace diveWebMVC.Controllers
                 return NotFound();
             }
             ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachId", tCcourse.CoachId);
+            ViewData["CoachName"] = new SelectList(_context.TMcoaches, "CoachName", "CoachName", tCcourse.CoachId);
             ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CourseCategoryId", tCcourse.CourseCategoryId);
+            ViewData["CategoryName"] = new SelectList(_context.TCcourseCategories, "CategoryName", "CategoryName", tCcourse.CourseCategoryId);
             ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelId", tCcourse.LevelId);
+            ViewData["LevelName"] = new SelectList(_context.TCcourseLevels, "LevelName", "LevelName", tCcourse.LevelId);
+            return View(tCcourse);
+        }*/
+
+        // GET: TCcourses/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tCcourse = await _context.TCcourses.FindAsync(id);
+            if (tCcourse == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachName", tCcourse.CoachId);
+            ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CategoryName", tCcourse.CourseCategoryId);
+            ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelName", tCcourse.LevelId);
             return View(tCcourse);
         }
 
-        // POST: TCcourses/Edit/5
+
+
+
+
+        /*// POST: TCcourses/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -222,10 +291,73 @@ namespace diveWebMVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachId", tCcourse.CoachId);
+            ViewData["CoachName"] = new SelectList(_context.TMcoaches, "CoachName", "CoachName", tCcourse.CoachId);
             ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CourseCategoryId", tCcourse.CourseCategoryId);
-            ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelId", tCcourse.LevelId);
+            ViewData["CourseCategoryName"] = new SelectList(_context.TCcourseCategories, "CategoryName", "CategoryName", tCcourse.CourseCategoryId);
+            ViewData["LevelName"] = new SelectList(_context.TCcourseLevels, "LevelName", "LevelName", tCcourse.LevelId);
+            return View(tCcourse);
+        }*/
+
+        // POST: TCcourses/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("CourseId,CourseCategoryId,LevelId,CoachId,CoursePrice,Photo,CreatedAt,UpdatedAt")] TCcourse tCcourse)
+        {
+            if (id != tCcourse.CourseId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var existingCourse = await _context.TCcourses.AsNoTracking().FirstOrDefaultAsync(c => c.CourseId == id);
+
+                if (existingCourse == null)
+                {
+                    return NotFound();
+                }
+
+                if (Request.Form.Files["Photo"] != null)
+                {
+                    using (BinaryReader reader = new BinaryReader(Request.Form.Files["Photo"].OpenReadStream()))
+                    {
+                        tCcourse.Photo = reader.ReadBytes((int)Request.Form.Files["Photo"].Length);
+                    }
+                }
+                else
+                {
+                    tCcourse.Photo = existingCourse.Photo; // Use existing photo if none is uploaded
+                }
+
+                try
+                {
+                    _context.Update(tCcourse);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TCcourseExists(tCcourse.CourseId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["CoachId"] = new SelectList(_context.TMcoaches, "CoachId", "CoachName", tCcourse.CoachId);
+            ViewData["CourseCategoryId"] = new SelectList(_context.TCcourseCategories, "CourseCategoryId", "CategoryName", tCcourse.CourseCategoryId);
+            ViewData["LevelId"] = new SelectList(_context.TCcourseLevels, "LevelId", "LevelName", tCcourse.LevelId);
             return View(tCcourse);
         }
+
+
+
 
         // GET: TCcourses/Delete/5
         public async Task<IActionResult> Delete(int? id)

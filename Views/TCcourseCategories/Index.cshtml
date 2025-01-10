@@ -21,14 +21,40 @@
             vertical-align: top;
             border-color: #dee2e6;
         }
+
+        #searchButton {
+            background-color: lightgray;
+            color: black;
+            border: none;
+        }
+
+        #clearButton {
+            background-color: bisque;
+            color: black;
+            border: none;
+        }
+
     </style>
 }
-
+<div class="container">
 <div>
-    <h1>課程種類管理</h1>
-    <p>
-        <a asp-action="Create" class="btn btn-primary btn-lg"><i class="fa-regular fa-square-plus fa-fade"></i> 新增課程種類</a>
-    </p>
+    <h1>課程種類管理</h1>    
+</div>
+
+<div class="form-group d-flex align-items-center justify-content-between gap-3">
+    <a asp-action="Create" class="btn btn-primary btn-lg"><i class="fa-regular fa-square-plus fa-fade"></i> 新增課程種類</a>
+
+    <div class="d-flex justify-content-end">
+        <div class="me-3">
+            <label for="searchKeyword" class="form-label">關鍵字搜尋:</label>
+            <input type="text" id="searchKeyword" class="form-control" placeholder="輸入關鍵字搜尋..." />
+        </div>
+        <div class="mt-4">
+            <button id="searchButton" class="btn btn-secondary btn-lg">搜尋</button>
+            <button id="clearButton" type="button" class="btn btn-light btn-lg">取消搜尋</button> <!-- 新增的取消按鈕 -->
+        </div>
+    </div>
+
 </div>
 
 <table class="table table-bordered table-striped table-hover table-responsive"> @*table-responsive顯示水平捲軸*@
@@ -90,3 +116,43 @@
 }
     </tbody>
 </table>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("searchButton").addEventListener("click", function() {
+            var keyword = document.getElementById("searchKeyword").value.toLowerCase();
+            var rows = document.querySelectorAll(".table tbody tr");
+
+            rows.forEach(function(row) {
+                var cells = row.querySelectorAll("td");
+                var found = false;
+
+                cells.forEach(function(cell) {
+                    if (cell.textContent.toLowerCase().includes(keyword)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = ""; // 顯示行
+                } else {
+                    row.style.display = "none"; // 隱藏行
+                }
+            });
+        });
+
+        // 取消搜尋功能
+        document.getElementById("clearButton").addEventListener("click", function() {
+            document.getElementById("searchKeyword").value = ""; // 清空搜尋框
+            var rows = document.querySelectorAll(".table tbody tr");
+            rows.forEach(function(row) {
+                row.style.display = ""; // 顯示所有行
+            });
+        });
+    </script>
+}
