@@ -1,0 +1,22 @@
+﻿@model TCcourse
+@inject diveShopperContext _context
+
+@{
+    //從_context抓到TCcourses紀錄，用Model的CourseId來搜尋
+    TCcourse? tccourse = await _context.TCcourses.FindAsync(Model.CourseId);
+    if (tccourse != null && tccourse.Photo != null)
+    {
+        <img style="width:320px;height:240px" src="@Url.Action("GetPicture","TCcourses",new{id=Model.CourseId})"
+        title="@Html.DisplayFor(model => model.CourseCategory.CategoryName)" />
+    }
+
+    else {
+        <img style="width:320px;height:240px" src="@Url.Content("~/src/courseImages/No_image_available.jpeg")"
+             title="尚無圖片" />    
+    }
+
+
+
+
+
+}

@@ -2,13 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace diveWebMVC.Models;
 
 public partial class TNsize
 {
     public int SizeId { get; set; }
-
+    [Display(Name = "尺寸")]
     public string Size { get; set; }
 
     public virtual ICollection<TNproductvariant> TNproductvariants { get; set; } = new List<TNproductvariant>();

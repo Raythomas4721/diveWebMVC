@@ -8,10 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
     <Compile Remove="ViewsModels\**" />
+    <Content Remove="NewFolder\**" />
     <Content Remove="ViewsModels\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <EmbeddedResource Remove="ViewsModels\**" />
+    <None Remove="NewFolder\**" />
     <None Remove="ViewsModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.js" />
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.min.js" />
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.min.nostyle.js" />
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.min.nostyle.min.js" />
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.nostyle.js" />
+    <None Include="wwwroot\lib\ag-grid\ag-grid-community.nostyle.min.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<diveWebMVC.Models.TCcourseCategory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles
+{
+    <style>
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-accent-bg: transparent;
+            --bs-table-striped-color: #212529;
+            --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+            --bs-table-active-color: #212529;
+            --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+            --bs-table-hover-color: #212529;
+            --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            vertical-align: top;
+            border-color: #dee2e6;
+        }
+    </style>
+}
+
+<div>
+    <h1>課程種類管理</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary btn-lg"><i class="fa-regular fa-square-plus fa-fade"></i> 新增課程種類</a>
+    </p>
+</div>
+
+<table class="table table-bordered table-striped table-hover table-responsive"> @*table-responsive顯示水平捲軸*@
+    <thead class="table-primary">
+        <tr>
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.CategoryName) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Description) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Duration) *@
+            @* </th> *@
+            @* <th> *@
+            @*     @Html.DisplayNameFor(model => model.Quota) *@
+            @* </th> *@
+            <th>種類編號</th>
+            <th>名稱</th>
+            <th>描述</th>
+            <th>天數</th>
+            <th>名額</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CourseCategoryId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Quota)
+            </td>
+            <td>
+                    <button class="btn btn-success btn-sm">
+                        <a asp-action="Edit" asp-route-id="@item.CourseCategoryId" style="color:white"><i class="fa-regular fa-pen-to-square"></i> 編輯</a>
+                    </button>
+                    <button class="btn btn-warning btn-sm">
+                        <a asp-action="Details" asp-route-id="@item.CourseCategoryId" style="color:black"><i class="fa-regular fa-newspaper"></i> 詳情</a>
+                    </button>
+                    <button class="btn btn-danger btn-sm">
+                        <a asp-action="Delete" asp-route-id="@item.CourseCategoryId" style="color:white"><i class="fa-regular fa-trash-can"></i> 刪除</a>
+                    </button>
+                @* <a asp-action="Edit" asp-route-id="@item.CourseCategoryId">Edit</a> | *@
+                @* <a asp-action="Details" asp-route-id="@item.CourseCategoryId">Details</a> | *@
+                @* <a asp-action="Delete" asp-route-id="@item.CourseCategoryId">Delete</a> *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

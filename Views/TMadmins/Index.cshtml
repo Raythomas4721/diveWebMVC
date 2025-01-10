@@ -1,0 +1,124 @@
+﻿@model IEnumerable<diveWebMVC.Models.TMadmin>
+
+@{
+	ViewData["Title"] = "管理者列表";
+}
+@section Styles {
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css">
+}
+
+<div class="container">
+
+	<h3>管理者列表</h3>
+	<p>
+		<a asp-action="Create" class="btn btn-success">建立新管理者</a>
+	</p>
+
+	<div id="myGrid" class="ag-theme-alpine" style="height: 600px; width: 100%;">
+	</div>
+	@* <table class="table"> *@
+	@* 	<thead> *@
+	@* 		<tr> *@
+	@* 			<th> *@
+	@* 				@Html.DisplayNameFor(model => model.UserName) *@
+	@* 			</th> *@
+	@* 			<th> *@
+	@* 				@Html.DisplayNameFor(model => model.Email) *@
+	@* 			</th> *@
+	@* 			<th> *@
+	@* 				@Html.DisplayNameFor(model => model.RoleName) *@
+	@* 			</th> *@
+	@* 			<th> *@
+	@* 				@Html.DisplayNameFor(model => model.CreateAt) *@
+	@* 			</th> *@
+	@* 			<th> *@
+	@* 				@Html.DisplayNameFor(model => model.LastLogin) *@
+	@* 			</th> *@
+	@* 			<th></th> *@
+	@* 		</tr> *@
+	@* 	</thead> *@
+	@* 	<tbody> *@
+	@* 		@foreach (var item in Model) *@
+	@* 		{ *@
+	@* 			<tr> *@
+	@* 				<td> *@
+	@* 					@Html.DisplayFor(modelItem => item.UserName) *@
+	@* 				</td> *@
+	@* 				<td> *@
+	@* 					@Html.DisplayFor(modelItem => item.Email) *@
+	@* 				</td> *@
+	@* 				<td> *@
+	@* 					@Html.DisplayFor(modelItem => item.RoleName) *@
+	@* 				</td> *@
+	@* 				<td> *@
+	@* 					@Html.DisplayFor(modelItem => item.CreateAt) *@
+	@* 				</td> *@
+	@* 				<td> *@
+	@* 					@Html.DisplayFor(modelItem => item.LastLogin) *@
+	@* 				</td> *@
+	@* 				<td> *@
+	@* 					<a asp-action="Edit" asp-route-id="@item.AdminId">Edit</a> | *@
+	@* 					<a asp-action="Details" asp-route-id="@item.AdminId">Details</a> | *@
+	@* 					<a asp-action="Delete" asp-route-id="@item.AdminId">Delete</a> *@
+	@* 				</td> *@
+	@* 			</tr> *@
+	@* 		} *@
+	@* 	</tbody> *@
+	@* </table> *@
+</div>
+
+@section Scripts {
+	<script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+
+
+	<script>
+			$(document).ready(function() {
+
+			 $.ajax({
+				type: 'GET',
+				url: "https://localhost:7077/TMadmins/GetAdmin"
+			})
+			.done(function(data) {
+				console.log(data);
+				if (Array.isArray(data)) {
+					var columnDefs = [
+						{headerName: "使用者", field: "userName",width: 200 },
+						{headerName: "電子郵件", field: "email",width: 200 },
+						{headerName: "管理者權限", field: "roleName",width: 200 },
+						{headerName: "建立日期", field: "createAt",width: 200 },
+						{headerName: "最後登入", field: "lastLogin",width: 200  },
+						{
+							headerName: "操作",
+							field: "actions",
+							width: 300,
+							cellRenderer: function(e) {
+								const editUrl = `/TMadmins/Edit/${e.data.adminId}`;
+								const deleteUrl = `/TMadmins/Delete/${e.data.adminId}`;
+								return `
+									<a class="btn btn-secondary" href="${editUrl}">Edit</a> |
+									<a class="btn btn-danger"  href="${deleteUrl}">Delete</a>
+								`;
+							}
+						}
+					];
+					const gridOptions = {
+						columnDefs: columnDefs,
+						rowData: data,
+						defaultColDef: {
+							sortable: false,
+							filter: true,
+						},
+					};
+				// 初始化 grid
+				const myGridElement = document.querySelector('#myGrid');
+				agGrid.createGrid(myGridElement, gridOptions);
+				} else {
+					console.error("Received data is not an array.");
+				}
+			})
+			.fail(function(err) {
+				alert("Error fetching data:", err);
+			});
+		})
+	</script>
+}

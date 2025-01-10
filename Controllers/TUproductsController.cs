@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using diveWebMVC.ViewModels;
+using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace diveWebMVC.Controllers
 {
@@ -19,10 +22,42 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TUproducts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString,int? categoryId)
         {
-            var diveShopperContext = _context.TUproducts.Include(t => t.Category).Include(t => t.ProductCondition).Include(t => t.Seller);
-            return View(await diveShopperContext.ToListAsync());
+            //var diveShopperContext = _context.TUproducts.Include(t => t.Category).Include(t => t.ProductCondition).Include(t => t.Seller); 
+            var productsQuery = _context.TUproducts.AsQueryable();
+            //if (!string.IsNullOrEmpty(searchString)) {
+            //    productsQuery = productsQuery.Where(p=>p.ProductName)
+            //}
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                productsQuery = productsQuery.Where(p => p.ProductName.Contains(searchString));
+            }
+
+            if (categoryId.HasValue)
+            {
+                productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            var TUproductsviewmodels = await productsQuery.Select(p=>new TUproductsviewmodels {
+                ProductId=p.ProductId,
+                SellerId=p.SellerId,
+                //SellerName=p.SellerName,
+                CategoryId =p.CategoryId,
+                ProductName = p.ProductName,
+                ProductDescription = p.ProductDescription,
+                ProductPrice = p.ProductPrice,
+                UpdatedAt = p.UpdatedAt,
+                CreatedAt = p.CreatedAt,
+                ProductConditionId = p.ProductConditionId,
+                ProductStatus = p.ProductStatus,
+                //Image = null,
+                TUproductImages = p.TUproductImages ?? new List<TUproductImage>()
+            }).ToListAsync();
+            
+            
+            //return View(await diveShopperContext.ToListAsync());
+            return View(TUproductsviewmodels);
         }
 
         // GET: TUproducts/Details/5
@@ -171,5 +206,24 @@ namespace diveWebMVC.Controllers
         {
             return _context.TUproducts.Any(e => e.ProductId == id);
         }
+        public async Task<IActionResult> GetPicture(int id)
+        {
+            var product = await _context.TUproducts
+                .Include(p => p.TUproductImages)
+                .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product?.TUproductImages?.Any() == true)
+            {
+                var image = product.TUproductImages.FirstOrDefault(); // 假設您只想顯示第一張圖片
+                if (image?.Image != null)
+                {
+                    return File(image.Image, "image/jpeg");
+                }
+            }
+
+            // 如果沒有找到圖片或沒有圖片，返回一個默認圖片或404
+            return NotFound();
+        }
+
     }
 }
