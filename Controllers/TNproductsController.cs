@@ -21,6 +21,12 @@ namespace diveWebMVC.Controllers
         // GET: TNproducts
         public async Task<IActionResult> Index(string searchString)
         {
+            // 如果沒有在Session中找到登入資訊，跳轉回登入頁面
+            if (HttpContext.Session.GetString("AdminId") == null)
+            {
+                return RedirectToAction("Login", "TMadmins");
+            }
+
             IQueryable<TNproduct> query = _context.TNproducts.Include(p => p.TNpictures);
 
             if (!string.IsNullOrEmpty(searchString))

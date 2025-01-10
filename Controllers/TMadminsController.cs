@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using diveWebMVC.Models;
+using diveWebMVC.ViewModels;
 
 namespace diveWebMVC.Controllers
 {
@@ -35,11 +36,60 @@ namespace diveWebMVC.Controllers
             // 返回 JSON 格式的資料
             return Json(TMadmin);
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new LoginViewModel()); 
+        }
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var admin = _context.TMadmins
+                    .FirstOrDefault(a => a.UserName == model.UserName && a.PasswordHash == model.PasswordHash);
 
+                if (admin != null)
+                {
+                    // 登入成功，設定 Session 或 Cookie
+                    HttpContext.Session.SetString("AdminId", admin.AdminId.ToString());
+                    return RedirectToAction("Index", "Home");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+
+            return View(model);
+        }
+
+        // 登出功能
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login","TMadmins");
+        }
 
         // GET: TMadmins
         public async Task<IActionResult> Index()
         {
+            var adminId = HttpContext.Session.GetString("AdminId");
+
+            if (!string.IsNullOrEmpty(adminId))
+            {
+                // 根據 AdminId 取得使用者資訊
+                var admin = _context.TMadmins.FirstOrDefault(a => a.AdminId.ToString() == adminId);
+
+                if (admin != null)
+                {
+                    ViewData["AdminName"] = admin.UserName; // 將名稱傳到 View
+                    ViewData["AdminEmail"] = admin.Email;  // 可選，傳遞其他資訊
+                }
+            }
+            else
+            {
+                // Session 無效，導回登入頁
+                return RedirectToAction("Login");
+            }
             return View(await _context.TMadmins.ToListAsync());
         }
 

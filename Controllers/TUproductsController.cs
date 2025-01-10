@@ -24,6 +24,12 @@ namespace diveWebMVC.Controllers
         // GET: TUproducts
         public async Task<IActionResult> Index(string searchString,int? categoryId)
         {
+            // 如果沒有在Session中找到登入資訊，跳轉回登入頁面
+            if (HttpContext.Session.GetString("AdminId") == null)
+            {
+                return RedirectToAction("Login", "TMadmins");
+            }
+
             //var diveShopperContext = _context.TUproducts.Include(t => t.Category).Include(t => t.ProductCondition).Include(t => t.Seller); 
             var productsQuery = _context.TUproducts.AsQueryable();
             //if (!string.IsNullOrEmpty(searchString)) {
