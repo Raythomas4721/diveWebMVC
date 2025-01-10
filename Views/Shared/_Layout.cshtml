@@ -330,7 +330,18 @@
                 <div class='scroller__bar' id="scroller__bar"></div>
             </div>
         </div>
-        } 
+        }
+        else
+        {
+            <!-- 未登入時顯示簡化的選單或提示 -->
+            <div class="mdl-layout__drawer">
+                <a href="/"><header>diveShopper</header></a>
+                <div class="d-flex align-items-center justify-content-center vh-100">
+                    <h3 class=" text-white">請先登入</h3>
+
+                </div>
+            </div>
+        }
         <main class="mdl-layout__content">
 
             <div class="mdl-grid mdl-grid--no-spacing dashboard">
