@@ -330,7 +330,9 @@ namespace diveWebMVC.Controllers
                 {
                     tCcourse.Photo = existingCourse.Photo; // Use existing photo if none is uploaded
                 }
-
+                //tCcourse.CreatedAt = await _context.TCcourses.AsNoTracking().FirstOrDefaultAsync(c => c.CourseId == id);
+                var existingCourse2 = await _context.TCcourses.AsNoTracking().FirstOrDefaultAsync(c => c.CourseId == id);
+                tCcourse.CreatedAt = existingCourse2.CreatedAt;
                 try
                 {
                     _context.Update(tCcourse);
