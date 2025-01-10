@@ -167,6 +167,8 @@ namespace diveWebMVC.Controllers
         }
 
         // GET: TUproducts/Delete/5
+
+        // GET: TUproducts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -179,14 +181,45 @@ namespace diveWebMVC.Controllers
                 .Include(t => t.ProductCondition)
                 .Include(t => t.Seller)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
+
             if (tUproduct == null)
             {
                 return NotFound();
             }
 
-            return View(tUproduct);
+            // 使用 TUproductsviewmodels 將數據傳遞到視圖
+            var productViewModel = new TUproductsviewmodels
+            {
+                ProductId = tUproduct.ProductId,
+                ProductName = tUproduct.ProductName,
+                ProductDescription = tUproduct.ProductDescription,
+                ProductPrice = tUproduct.ProductPrice,
+                UpdatedAt = tUproduct.UpdatedAt,
+                CreatedAt = tUproduct.CreatedAt,
+                ProductStatus = tUproduct.ProductStatus,
+                Category = tUproduct.Category,
+                ProductCondition = tUproduct.ProductCondition,
+                Seller = tUproduct.Seller
+            };
+
+            return View(productViewModel);
         }
 
+
+        // POST: TUproducts/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var tUproduct = await _context.TUproducts.FindAsync(id);
+        //    if (tUproduct != null)
+        //    {
+        //        _context.TUproducts.Remove(tUproduct);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
         // POST: TUproducts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -196,11 +229,12 @@ namespace diveWebMVC.Controllers
             if (tUproduct != null)
             {
                 _context.TUproducts.Remove(tUproduct);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); // 重定向到商品列表頁面
         }
+
 
         private bool TUproductExists(int id)
         {

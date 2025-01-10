@@ -98,7 +98,7 @@
 
         <!-- 搜索表单 -->
         <form class="d-flex searchBar" method="get" role="search" asp-action="Index">
-            <input class="form-control me-2" type="search" placeholder="搜尋商品名稱" name="searchString" aria-label="Search" />
+            <input id="searchString" class="form-control me-2" type="search" placeholder="搜尋商品名稱" name="searchString" aria-label="Search" value="@ViewBag.CurrentFilter" />
             <button class="btn btn-outline-success" type="submit">搜尋</button>
         </form>
     </div>
@@ -109,9 +109,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ProductName)
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Image)
-                </th>
+                </th> *@
                 <th>
                     @Html.DisplayNameFor(model => model.ProductDescription)
                 </th>
@@ -147,12 +147,12 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
-                    <td>
+                    @* <td>
                         <img src="@Url.Action("GetPicture", "TUproducts", new { id = item.ProductId })"
                              class="product-image"
                              onerror="this.onerror=null; this.src='@Url.Content("~/images/err2.png")';" />
 
-                    </td>
+                    </td> *@
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductDescription)
                     </td>

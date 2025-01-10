@@ -22,7 +22,7 @@
     <div >
         <div class="row">
             <div class="col-md-4">
-                <form asp-action="Create">
+                <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="SellerId" class="control-label"></label>
@@ -66,69 +66,17 @@
                         <input asp-for="ProductStatus" class="form-control" />
                         <span asp-validation-for="ProductStatus" class="text-danger"></span>
                     </div>
-                    <!-- 上傳多張圖片 -->
-                    <div class="form-group">
-                        <label>上傳圖片</label>
-                        <input type="file" name="Images" accept="image/*" multiple class="form-control" />
-                        <span asp-validation-for="Image" class="text-danger"></span>
-                    </div>
-
-                    @* <!-- 顯示上傳的圖片並選擇封面 -->
-                    <div class="form-group">
-                        <label>選擇封面圖片</label>
-                        <div id="image-preview-container">
-                            <!-- 圖片預覽 -->
-                            @if (Model.TUproductImages != null && Model.TUproductImages.Count() > 0)
-                            {
-                                foreach (var image in Model.TUproductImages)
-                                {
-                                    <div class="form-check">
-                                        <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(image.Image)}")" class="image-preview" />
-                                        <input type="radio" name="CoverImageId" value="@image.ProductImages" class="form-check-input" />
-                                        <label class="form-check-label">設為封面</label>
-                                    </div>
-                                }
-                            }
+                    @* <div class="form-group">
+                        <label>選擇圖片</label>
+                        <div class="col-6">
+                            <h6 class="mb-4">選擇圖片</h6>
+                            <div class="form-group mb-3">
+                                <img id="imgPreview" class="img-fluid mb-3 image-preview" src='@Url.Content("~/images/err2.png")' title="尚無圖片" />
+                                <input type="file" class="form-control" id="imageInput" name="Images" accept="image/*" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
                         </div>
                     </div> *@
-                    <div class="form-group">
-                        <label>上傳圖片</label>
-                        <input type="file" name="Images" accept="image/*" multiple class="form-control" />
-                        <span asp-validation-for="Image" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label>選擇封面圖片</label>
-                        <div id="image-preview-container">
-                            <!-- 檢查 Model 是否為空 -->
-                            @if (Model == null)
-                            {
-                                <p>模型為空，無法加載數據。</p>
-                            }
-                            else
-                            {
-                                <!-- 如果 Model 非空，檢查 TUproductImages 是否有數據 -->
-                                @if (Model.TUproductImages != null && Model.TUproductImages.Any())
-                                {
-                                    foreach (var image in Model.TUproductImages)
-                                    {
-                                        <div class="form-check">
-                                            @if (image.Image != null)
-                                            {
-                                                <img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(image.Image)}")" class="image-preview" />
-                                            }
-                                            <input type="radio" name="CoverImageId" value="@image.ProductImages" class="form-check-input" />
-                                            <label class="form-check-label">設為封面</label>
-                                        </div>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>沒有圖片可用。</p>
-                                }
-                            }
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />
