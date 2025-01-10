@@ -1,11 +1,11 @@
 ﻿@model diveWebMVC.Models.TMadmin
 
 @{
-	ViewData["Title"] = "建立新管理";
+	ViewData["Title"] = "建立新管理員";
 }
 
 <div class="container">
-	<h1>Create</h1>
+	<h3>建立新管理員</h3>
 
 	<hr />
 	<div class="row">
@@ -29,7 +29,13 @@
 				</div>
 				<div class="form-group">
 					<label asp-for="RoleName" class="control-label"></label>
-					<input asp-for="RoleName" class="form-control" />
+					<select asp-for="RoleName" class="form-control">
+						<option value="超級管理員">超級管理員</option>
+						<option value="系統管理員">系統管理員</option>
+						<option value="會員管理員">會員管理員</option>
+						<option value="商品管理員">商品管理員</option>
+						<option value="一般管理員">一般管理員</option>
+					</select>
 					<span asp-validation-for="RoleName" class="text-danger"></span>
 				</div>
 				@* <div class="form-group"> *@
@@ -42,8 +48,8 @@
 				@* 	<input asp-for="LastLogin" class="form-control" /> *@
 				@* 	<span asp-validation-for="LastLogin" class="text-danger"></span> *@
 				@* </div> *@
-				<div class="form-group">
-					<input type="submit" value="Create" class="btn btn-primary" />
+				<div class="form-group mb-3 mt-3">
+					<input type="submit" value="建立" class="btn btn-primary" />
 				</div>
 			</form>
 		</div>
