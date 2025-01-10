@@ -20,8 +20,8 @@ public partial class TSsiteDetail
     public string Detail { get; set; }
     [Display(Name = "租用狀態")]
     public string State { get; set; }
-    [Display(Name = "照片")]
-    public byte[] Photo { get; set; }
+    //[Display(Name = "照片")]
+    //public byte[] Photo { get; set; }
 
     public virtual ICollection<TSorder> TSorders { get; set; } = new List<TSorder>();
 
