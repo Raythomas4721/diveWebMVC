@@ -21,6 +21,13 @@
         .modal-content {
             z-index: 1060 !important;
         }
+        .custom-modal .modal-dialog{
+        width: 90% !important; /* 設定寬度為 90% */
+        max-width: 2000px !important; /* 設定最大寬度為 1500px */
+        height: 90% !important; /* 設定高度 */
+        margin: 50px auto !important; /* 讓 Modal 垂直居中 */
+        
+        }
     </style>
  
 }
@@ -89,7 +96,7 @@
     </table>
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">商品資訊</h5>
