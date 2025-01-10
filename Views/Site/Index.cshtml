@@ -165,9 +165,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.State)
             </th>
-            <th>
+@*             <th>
                 @Html.DisplayNameFor(model => model.Photo)
-            </th> 
+            </th>  *@
             <!-- <span style="color:red;">新增這行</span> -->
  
             <th></th>
@@ -196,9 +196,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.State)
                 </td>
-                <td>
+@*                 <td>
                     <img src="@Url.Content("~/images/" + item.Photo)" alt="@item.VenueName" style="width:100px;height:auto;" />
-                </td>
+                </td> *@
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.SiteId" class="action-link">修改</a> |
